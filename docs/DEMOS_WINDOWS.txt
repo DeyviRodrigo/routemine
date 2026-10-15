@@ -1,0 +1,15 @@
+backend=cpu
+horizontal_m=100.000000
+max_grade_percent=10.000000
+samples=101
+checked_constraints_pass=true
+all_constraints_pass=false
+not_evaluated=continuous_triangle_crossing
+not_evaluated=curve_radius
+not_evaluated=straight_before_turn
+not_evaluated=road_width_clearance
+not_evaluated=zero_grade_on_curves
+not_evaluated=self_intersection
+synthetic_cut_price=1 direct_CU=1150 detour_CU=1600 preliminary_choice=excavate
+synthetic_cut_price=10 direct_CU=2500 detour_CU=1600 preliminary_choice=detour
+Illustrative prices only; geometry/continuous terrain checks remain pending.

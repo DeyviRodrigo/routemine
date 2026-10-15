@@ -1,0 +1,8 @@
+# Only origin/destination are mandatory in basic mode.
+# Default road/cost profiles are SYNTHETIC, not approved designs.
+start_x=0
+start_y=0
+start_z=0
+finish_x=100
+finish_y=0
+finish_z=0

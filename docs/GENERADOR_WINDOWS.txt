@@ -1,0 +1,30 @@
+LOW EXCAVATION PRICE (SYNTHETIC)
+expanded=43 edges_checked=263
+status=preliminary_discrete_corridor
+points=11
+horizontal_m=100
+max_grade_percent=0
+centerline_cut_m3=150
+centerline_fill_m3=0
+preliminary_cost_CU=1150
+all_constraints_pass=false
+not_evaluated=curve_radius
+not_evaluated=straight_before_turn
+not_evaluated=road_width_clearance
+not_evaluated=zero_grade_on_curves
+not_evaluated=self_intersection
+HIGH EXCAVATION PRICE (SYNTHETIC)
+expanded=39 edges_checked=243
+status=preliminary_discrete_corridor
+points=13
+horizontal_m=136.568542495
+max_grade_percent=0
+centerline_cut_m3=2.65165042945
+centerline_fill_m3=6.66133814775e-15
+preliminary_cost_CU=1418.71843354
+all_constraints_pass=false
+not_evaluated=curve_radius
+not_evaluated=straight_before_turn
+not_evaluated=road_width_clearance
+not_evaluated=zero_grade_on_curves
+not_evaluated=self_intersection
