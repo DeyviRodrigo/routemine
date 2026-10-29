@@ -34,12 +34,14 @@ revisión. No había workflows ni Releases y no se distribuían ejecutables.
 
 Se incluyen ejecutables CPU en bin/, instrucciones, demostración para Windows
 y hashes SHA256. El binario Windows se compila con MinGW-w64 x64 y runtime
-estático. Su ejecución nativa está pendiente; no se confunde con las pruebas
-MSVC históricas. El binario Linux se ha ejecutado en este entorno.
+estático. GitHub Actions verificó su ejecución en Windows Server 2022: demo y
+planificación básica aprobadas, con CSV idéntico a la compilación nativa MSVC.
+El binario Linux se ha ejecutado en este entorno.
 
 Se añade un workflow que compila y ejecuta CTest en Windows y Linux y publica
-artefactos por commit. Sus resultados se consultan en GitHub Actions; el archivo
-del workflow por sí solo no demuestra que una ejecución haya aprobado.
+artefactos por commit. La primera ejecución aprobó ambos sistemas operativos:
+CTest 28/28 en Windows y Linux, y la prueba del ejecutable Windows distribuido.
+Evidencia: https://github.com/DeyviRodrigo/routemine/actions/runs/40802573184
 
 Siguiente trabajo recomendado: importación DXF con un archivo real y visor de
 terreno/ruta, seguido de validación geométrica vehicular y rendimiento.

@@ -16,9 +16,11 @@ Desde PowerShell, en la raíz del repositorio:
 
 El archivo `bin/windows-x64/demo.cmd` permite abrir una demostración con doble clic.
 El ejecutable se compila con MinGW-w64 y runtime enlazado estáticamente.
-No está firmado digitalmente. Compilación cruzada desde Linux; ejecución Windows
-pendiente de verificar para este binario concreto. Las pruebas Windows históricas
-corresponden al código fuente, no a este archivo.
+No está firmado digitalmente. Compilación cruzada desde Linux. GitHub Actions
+comprobó este binario en Windows Server 2022: demo y planificación básica aprobadas,
+con CSV idéntico al generado por la compilación nativa MSVC. El código fuente
+aprobó además las 28 pruebas CTest en Windows y Linux.
+Evidencia: https://github.com/DeyviRodrigo/routemine/actions/runs/40802573184
 
 ## Linux x64
 
