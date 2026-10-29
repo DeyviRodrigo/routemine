@@ -1,0 +1,2 @@
+53cfb33145a1a1083de7761791f2cd7a594bcaf004002d4ecd4b36eb10344e0d  bin/linux-x64/routemine_cli
+a4704fbff0d57266446ab468fb100883b812d88f43a83a0cff3668c7075e49d8  bin/windows-x64/routemine_cli.exe

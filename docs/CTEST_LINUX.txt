@@ -1,0 +1,607 @@
+Start testing: Oct 29 09:43 CST
+----------------------------------------------------------
+1/28 Testing: utm
+1/28 Test: utm
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "utm"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"utm" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+utm: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"utm" end time: Oct 29 09:43 CST
+"utm" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/28 Testing: grade
+2/28 Test: grade
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "grade"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"grade" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+grade: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"grade" end time: Oct 29 09:43 CST
+"grade" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/28 Testing: invalid
+3/28 Test: invalid
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "invalid"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"invalid" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+invalid: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"invalid" end time: Oct 29 09:43 CST
+"invalid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/28 Testing: mesh
+4/28 Test: mesh
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "mesh"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"mesh" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+mesh: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"mesh" end time: Oct 29 09:43 CST
+"mesh" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/28 Testing: hole
+5/28 Test: hole
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "hole"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"hole" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+hole: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"hole" end time: Oct 29 09:43 CST
+"hole" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/28 Testing: overlap
+6/28 Test: overlap
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "overlap"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"overlap" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+overlap: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"overlap" end time: Oct 29 09:43 CST
+"overlap" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/28 Testing: cut_fill
+7/28 Test: cut_fill
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "cut_fill"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"cut_fill" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+cut_fill: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cut_fill" end time: Oct 29 09:43 CST
+"cut_fill" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/28 Testing: surface
+8/28 Test: surface
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "surface"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"surface" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+surface: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"surface" end time: Oct 29 09:43 CST
+"surface" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/28 Testing: incomplete
+9/28 Test: incomplete
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "incomplete"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"incomplete" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+incomplete: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"incomplete" end time: Oct 29 09:43 CST
+"incomplete" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/28 Testing: backend
+10/28 Test: backend
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "backend"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"backend" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+backend: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"backend" end time: Oct 29 09:43 CST
+"backend" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/28 Testing: economics
+11/28 Test: economics
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "economics"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"economics" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+economics: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"economics" end time: Oct 29 09:43 CST
+"economics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/28 Testing: cost_balance
+12/28 Test: cost_balance
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_tests" "cost_balance"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"cost_balance" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+cost_balance: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cost_balance" end time: Oct 29 09:43 CST
+"cost_balance" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/28 Testing: obj
+13/28 Test: obj
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "obj"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"obj" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+obj: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"obj" end time: Oct 29 09:43 CST
+"obj" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/28 Testing: obj_invalid
+14/28 Test: obj_invalid
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "obj_invalid"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"obj_invalid" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+obj_invalid: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"obj_invalid" end time: Oct 29 09:43 CST
+"obj_invalid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/28 Testing: generated_economics
+15/28 Test: generated_economics
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "generated_economics"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"generated_economics" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+cheap: cut=150 length=100 cost=1150 costly: cut=2.65165 length=136.569 cost=1418.72
+generated_economics: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"generated_economics" end time: Oct 29 09:43 CST
+"generated_economics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/28 Testing: generated_profile
+16/28 Test: generated_profile
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "generated_profile"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"generated_profile" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+generated_profile: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"generated_profile" end time: Oct 29 09:43 CST
+"generated_profile" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/28 Testing: no_path
+17/28 Test: no_path
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "no_path"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"no_path" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+no_path: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"no_path" end time: Oct 29 09:43 CST
+"no_path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/28 Testing: search_limits
+18/28 Test: search_limits
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "search_limits"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"search_limits" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+search_limits: PASS
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"search_limits" end time: Oct 29 09:43 CST
+"search_limits" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/28 Testing: discontinuity
+19/28 Test: discontinuity
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "discontinuity"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"discontinuity" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+discontinuity: PASS
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"discontinuity" end time: Oct 29 09:43 CST
+"discontinuity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/28 Testing: large_coordinates
+20/28 Test: large_coordinates
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_planner_tests" "large_coordinates"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"large_coordinates" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+large_coordinates: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"large_coordinates" end time: Oct 29 09:43 CST
+"large_coordinates" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/28 Testing: cli_plan
+21/28 Test: cli_plan
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_cli" "--plan" "/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.obj" "/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.request" "/workspace/scratch/27497acea2b4/routemine/build/ridge-route.csv"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"cli_plan" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+# EFFECTIVE CONFIGURATION
+config_version=1
+terrain_path="/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.obj"
+road_profile=custom
+vehicle_profile=haul_truck_unspecified
+cost_profile=custom
+# WARNING: Mining haul-road context only: truck model/dimensions and vehicle geometry are unspecified
+# WARNING: NOT IMPLEMENTED: curve radius, minimum straights, vehicle swept width, zero grade on curves, self-intersections
+# WARNING: road_width_m affects preliminary quantities/cost only; clearance is not verified
+start_x=0
+start_y=0
+start_z=0
+finish_x=100
+finish_y=0
+finish_z=0
+max_grade_percent=2
+max_cut_m=5
+max_fill_m=0
+road_width_m=1
+earthwork_mode=1
+sample_spacing_m=2
+surface_tolerance_m=0.01
+max_samples=1000000
+xy_spacing_m=10
+z_min=0
+z_max=0
+z_step_m=1
+max_states=200000
+max_expansions=100000
+max_edges=1000000
+road_per_m2=10
+soil_cut_per_m3=1
+rock_cut_per_m3=0
+fill_placement_per_m3=0
+imported_material_per_m3=0
+disposal_per_m3=0
+haul_per_m3_km=0
+rock_fraction=0
+reusable_cut_fraction=0
+internal_haul_km=0
+import_haul_km=0
+disposal_haul_km=0
+# effective_config_saved=/workspace/scratch/27497acea2b4/routemine/build/ridge-route.csv.project.conf
+expanded=43 edges_checked=263
+status=preliminary_discrete_corridor
+points=11
+horizontal_m=100
+max_grade_percent=0
+centerline_cut_m3=150
+centerline_fill_m3=0
+preliminary_cost_CU=1150
+all_constraints_pass=false
+not_evaluated=curve_radius
+not_evaluated=straight_before_turn
+not_evaluated=road_width_clearance
+not_evaluated=zero_grade_on_curves
+not_evaluated=self_intersection
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cli_plan" end time: Oct 29 09:43 CST
+"cli_plan" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/28 Testing: config_defaults
+22/28 Test: config_defaults
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_config_tests" "defaults"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"config_defaults" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+defaults: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"config_defaults" end time: Oct 29 09:43 CST
+"config_defaults" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/28 Testing: config_precedence
+23/28 Test: config_precedence
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_config_tests" "precedence"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"config_precedence" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+precedence: PASS
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"config_precedence" end time: Oct 29 09:43 CST
+"config_precedence" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/28 Testing: config_validation
+24/28 Test: config_validation
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_config_tests" "validation"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"config_validation" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+validation: PASS
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"config_validation" end time: Oct 29 09:43 CST
+"config_validation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/28 Testing: config_persistence
+25/28 Test: config_persistence
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_config_tests" "persistence"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"config_persistence" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+persistence: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"config_persistence" end time: Oct 29 09:43 CST
+"config_persistence" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/28 Testing: config_legacy
+26/28 Test: config_legacy
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_config_tests" "legacy"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"config_legacy" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+legacy: PASS
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"config_legacy" end time: Oct 29 09:43 CST
+"config_legacy" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/28 Testing: cli_basic
+27/28 Test: cli_basic
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_cli" "--plan-basic" "/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.obj" "/workspace/scratch/27497acea2b4/routemine/fixtures/basic.request" "/workspace/scratch/27497acea2b4/routemine/build/basic-route.csv"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"cli_basic" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+# EFFECTIVE CONFIGURATION
+config_version=1
+terrain_path="/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.obj"
+road_profile=mining_haul_provisional
+vehicle_profile=haul_truck_unspecified
+cost_profile=synthetic_example
+# WARNING: SYNTHETIC profiles: illustrative values, no approved vehicle/road profile or real prices
+# WARNING: Mining haul-road context only: truck model/dimensions and vehicle geometry are unspecified
+# WARNING: NOT IMPLEMENTED: curve radius, minimum straights, vehicle swept width, zero grade on curves, self-intersections
+# WARNING: road_width_m affects preliminary quantities/cost only; clearance is not verified
+start_x=0
+start_y=0
+start_z=0
+finish_x=100
+finish_y=0
+finish_z=0
+max_grade_percent=2
+max_cut_m=5
+max_fill_m=0
+road_width_m=1
+earthwork_mode=1
+sample_spacing_m=2
+surface_tolerance_m=0.01
+max_samples=1000000
+xy_spacing_m=10
+z_min=-5
+z_max=3
+z_step_m=1
+max_states=200000
+max_expansions=100000
+max_edges=1000000
+road_per_m2=10
+soil_cut_per_m3=1
+rock_cut_per_m3=0
+fill_placement_per_m3=0
+imported_material_per_m3=0
+disposal_per_m3=0
+haul_per_m3_km=0
+rock_fraction=0
+reusable_cut_fraction=0
+internal_haul_km=0
+import_haul_km=0
+disposal_haul_km=0
+# effective_config_saved=/workspace/scratch/27497acea2b4/routemine/build/basic-route.csv.project.conf
+expanded=43 edges_checked=263
+status=preliminary_discrete_corridor
+points=11
+horizontal_m=100
+max_grade_percent=0
+centerline_cut_m3=150
+centerline_fill_m3=0
+preliminary_cost_CU=1150
+all_constraints_pass=false
+not_evaluated=curve_radius
+not_evaluated=straight_before_turn
+not_evaluated=road_width_clearance
+not_evaluated=zero_grade_on_curves
+not_evaluated=self_intersection
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cli_basic" end time: Oct 29 09:43 CST
+"cli_basic" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/28 Testing: cli_show_config
+28/28 Test: cli_show_config
+Command: "/workspace/scratch/27497acea2b4/routemine/build/routemine_cli" "--show-config" "/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.obj" "/workspace/scratch/27497acea2b4/routemine/fixtures/basic.request"
+Directory: /workspace/scratch/27497acea2b4/routemine/build
+"cli_show_config" start time: Oct 29 09:43 CST
+Output:
+----------------------------------------------------------
+# EFFECTIVE CONFIGURATION
+config_version=1
+terrain_path="/workspace/scratch/27497acea2b4/routemine/fixtures/ridge.obj"
+road_profile=mining_haul_provisional
+vehicle_profile=haul_truck_unspecified
+cost_profile=synthetic_example
+# WARNING: SYNTHETIC profiles: illustrative values, no approved vehicle/road profile or real prices
+# WARNING: Mining haul-road context only: truck model/dimensions and vehicle geometry are unspecified
+# WARNING: NOT IMPLEMENTED: curve radius, minimum straights, vehicle swept width, zero grade on curves, self-intersections
+# WARNING: road_width_m affects preliminary quantities/cost only; clearance is not verified
+start_x=0
+start_y=0
+start_z=0
+finish_x=100
+finish_y=0
+finish_z=0
+max_grade_percent=2
+max_cut_m=5
+max_fill_m=0
+road_width_m=1
+earthwork_mode=1
+sample_spacing_m=2
+surface_tolerance_m=0.01
+max_samples=1000000
+xy_spacing_m=10
+z_min=-5
+z_max=3
+z_step_m=1
+max_states=200000
+max_expansions=100000
+max_edges=1000000
+road_per_m2=10
+soil_cut_per_m3=1
+rock_cut_per_m3=0
+fill_placement_per_m3=0
+imported_material_per_m3=0
+disposal_per_m3=0
+haul_per_m3_km=0
+rock_fraction=0
+reusable_cut_fraction=0
+internal_haul_km=0
+import_haul_km=0
+disposal_haul_km=0
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cli_show_config" end time: Oct 29 09:43 CST
+"cli_show_config" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 29 09:43 CST

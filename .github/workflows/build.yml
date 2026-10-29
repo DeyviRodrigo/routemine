@@ -1,0 +1,42 @@
+name: Build and test CPU
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu:
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --config Release --parallel 2
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Smoke test distributed Windows executable
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          & ./bin/windows-x64/routemine_cli.exe --demo
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & ./bin/windows-x64/routemine_cli.exe --plan-basic fixtures/ridge.obj fixtures/basic.request build/distributed.csv
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ((Get-FileHash build/distributed.csv).Hash -ne (Get-FileHash build/basic-route.csv).Hash) {
+            throw "Distributed executable output differs from native build"
+          }
+      - name: Upload CLI and fixtures
+        uses: actions/upload-artifact@v4
+        with:
+          name: routemine-cpu-${{ matrix.os }}-${{ github.sha }}
+          path: |
+            build/routemine_cli
+            build/Release/routemine_cli.exe
+            fixtures/
+            bin/README.md
+          if-no-files-found: error

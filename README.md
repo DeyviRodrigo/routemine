@@ -24,10 +24,16 @@ No se descargó ni ejecutó el Python original.
 - Integración opcional Qt 6/VTK con escena sintética, escrita pero no compilada aquí.
 
 No hay todavía importación DXF, interfaz de producción,
-exportación CSV/DXF/JSON, índices espaciales ni certificación de curvas/secciones.
+exportación DXF/JSON, índices espaciales ni certificación de curvas/secciones.
 Las consultas CPU recorren todas las caras: referencia de exactitud, no solución
 de rendimiento para millones de triángulos. Se rechazan caras verticales o
 degeneradas en XY y superficies solapadas de cotas contradictorias.
+
+## Ejecutables
+
+Véase [Distribución y ejecución](bin/README.md) para descargar y usar la CLI CPU.
+Esta versión es una herramienta de consola preliminar; la aplicación gráfica
+completa continúa pendiente.
 
 ## Compilar y comprobar
 
@@ -62,7 +68,7 @@ El ejemplo es sintético. La CLI escribe el CSV indicado (reemplaza ese archivo
 si ya existe), pero rechaza usar como salida alguno de los archivos de entrada.
 El código de salida 0 significa corredor preliminar generado; 3 significa sin
 camino en la malla elegida; 4 presupuesto agotado; 2 error de datos/configuración.
-No se ha realizado validación Linux en esta máquina Windows.
+La validación Linux adicional se documenta en [Revisión del repositorio](docs/REVISION_REPOSITORIO.md).
 
 Con Qt 6 y VTK compilado para Qt 6 ya instalados:
 
@@ -91,4 +97,4 @@ de GPU y el programa predeterminado usa CPU. No hay pruebas GPU ejecutadas aún.
 - [Generación CPU, OBJ, configuración y límites](docs/GENERADOR_CPU.md).
 - [Modo básico, avanzado y persistencia](docs/CONFIGURACION.md).
 
-No se ha inicializado Git ni creado rama: la carpeta destino era inexistente.
+El código está versionado en GitHub. El estado inicial conserva evidencia de pruebas Windows anteriores.
