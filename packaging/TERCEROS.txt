@@ -1,0 +1,29 @@
+Bibliotecas distribuidas con RouteTec
+
+Esta aplicación enlaza dinámicamente con Qt 6 y VTK 9.5, además de sus
+dependencias. Las DLL se distribuyen por separado y pueden ser reemplazadas
+por versiones compatibles por el destinatario. No se prohíbe la ingeniería
+inversa necesaria para depurar modificaciones de dichas bibliotecas.
+
+Cada subcarpeta contiene los avisos de licencia originales, la versión exacta,
+la receta conda-forge y las fuentes de descarga del paquete correspondiente.
+El manifiesto paquetes.json identifica todas las dependencias distribuidas.
+
+Qt se distribuye bajo LGPL 3, según el aviso incluido. Fuentes oficiales:
+https://code.qt.io/cgit/qt/
+https://download.qt.io/archive/qt/6.10/6.10.2/submodules/
+Recetas de compilación usadas:
+https://github.com/conda-forge/qt-main-feedstock
+
+VTK se distribuye bajo BSD, según sus avisos incluidos. Fuentes oficiales:
+https://gitlab.kitware.com/vtk/vtk/-/tree/v9.5.2
+https://github.com/conda-forge/vtk-feedstock
+
+Los componentes Visual C++ Runtime son redistribuibles de Microsoft y se
+instalan en la carpeta de la aplicación, sin cambiar las bibliotecas del
+sistema. Están sujetos a los términos de Microsoft incluidos en la carpeta
+vc14_runtime correspondiente. La aplicación no instala un compilador C++.
+
+El instalador fue construido con NSIS 3.11. Su código y documentación:
+https://nsis.sourceforge.io/
+https://nsis.sourceforge.io/Docs/AppendixI.html

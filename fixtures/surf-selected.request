@@ -1,0 +1,16 @@
+# A/B read from the user's open RouteMine session on 2026-10-29.
+# Terrain: D:/Downloads/RouteTec/Inputs/Surf_2027_FB.dxf
+road_profile=routetec_monolith
+cost_profile=length_only
+start_x=793200.22900425643
+start_y=8442369.0686915759
+start_z=4447.5
+finish_x=793273.14873060223
+finish_y=8440414.8235466089
+finish_z=3435
+max_grade_percent=10
+min_radius_m=50
+continuous_curves=1
+max_cut_m=30
+max_fill_m=30
+road_width_m=8

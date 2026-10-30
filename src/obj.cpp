@@ -1,13 +1,16 @@
 #include "routemine/core.hpp"
+#include "stream_progress.hpp"
 #include <charconv>
 #include <sstream>
 #include <stdexcept>
 namespace routemine {
-Terrain load_obj(std::istream& input) {
+Terrain load_obj(std::istream& input,ProgressCallback progress) {
+    StreamProgress work(input,std::move(progress));
     std::vector<Vec3> vertices;
     std::vector<std::array<std::size_t,3>> faces;
     std::string line;std::size_t number=0;
     while(std::getline(input,line)) {
+        work.reading();
         ++number;line=line.substr(0,line.find('#'));
         std::istringstream row(line);std::string type;if(!(row>>type))continue;
         auto fail=[&](){throw std::invalid_argument("Unsupported/invalid OBJ at line "+std::to_string(number));};
@@ -30,6 +33,6 @@ Terrain load_obj(std::istream& input) {
         }else fail();
     }
     if(input.bad())throw std::runtime_error("OBJ read failed");
-    return Terrain(std::move(vertices),std::move(faces));
+    work.report(85);Terrain terrain(std::move(vertices),std::move(faces));work.report(100);return terrain;
 }
 }

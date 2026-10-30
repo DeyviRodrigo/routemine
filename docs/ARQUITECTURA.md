@@ -31,20 +31,31 @@ renderizado 3D multiplataforma. El núcleo funciona sin GPU NVIDIA.
 7. **Adaptadores**: importador DXF con pruebas por tipo de entidad; CSV/DXF y
    proyecto JSON versionado con escritura temporal y reemplazo atómico.
 
-Qt y VTK quedan opcionales en la compilación inicial. El visor incluido es una
-prueba de integración con un cono sintético; no abre topografías ni representa
-una interfaz terminada. La selección del adaptador DXF se realizará contrastando
-soporte de entidades, licencias y archivos reales; no se incorpora una dependencia
-arbitraria sin comprobar equivalencia.
+Qt y VTK siguen siendo opcionales. El visor ya implementa el flujo de escritorio
+descrito en INTERFAZ_ROUTETEC.md: DXF/OBJ, TIN original, A/B, cálculo en segundo
+plano, configuración y proyectos/exportaciones. El adaptador DXF nativo cubre
+3DFACE ASCII, contrastado con los dos archivos reales entregados; no sustituye
+un importador general de todas las entidades. Las consultas usan un BVH sobre
+las caras originales. La alineación vehicular continúa pendiente.
+
+El escritorio usa ahora `plan_road`: busca primero sobre la superficie mediante
+A* XY y, si hace falta, estados a cotas admisibles sobre bordes de caras TIN.
+Evita construir el producto completo XY/Z; conserva comprobación posterior de
+pendiente y cobertura. Después examina atajos entre vértices de la primera ruta,
+con corte/relleno limitado, margen angular inicial 0° y relación de distancias
+estrictamente mayor que 5. Las propuestas se renderizan en rojo con referencia
+negra y se verifican de nuevo al abrir sus proyectos. La búsqueda es discreta y
+no garantiza óptimo global. La CLI Dijkstra anterior permanece disponible.
+Véase RUTAS_Y_CORTES.md.
 
 ## Fases y criterios de salida
 
 | Fase | Entregable | Criterio |
 |---|---|---|
 | 1 — entregada | Núcleo CPU, TIN, métricas, validación por muestras, CLI y pruebas | MSVC Release + CTest; límites y fallos explícitos |
-| 2 | Importador DXF e índice espacial | Fixtures 3DFACE/SOLID/TRACE/MESH/POLYFACE/POLYMESH; conteos, bounds, áreas y huecos contrastados; fixtures reales pendientes |
+| 2 — parcial | DXF 3DFACE ASCII e índice BVH entregados | Dos terrenos reales cargados y renderizados; otros tipos de entidad, áreas y cobertura exhaustiva pendientes |
 | 3 | Planificador CPU y alineación con tangentes/arcos | Pendiente, radio, recta mínima, curvas horizontales, corte/relleno, ancho y no intersección verificados independientemente; sin solución se informa sin fabricar carretera |
-| 4 | Aplicación Qt/VTK y persistencia | Abrir DXF, A/B, progreso/cancelación, exportar y reabrir proyecto en Windows/Linux |
+| 4 — parcial | Aplicación Qt/VTK y persistencia base entregadas en Windows | Abrir DXF, A/B, progreso/cancelación, exportar y reabrir comprobados; Linux y distribución pendientes |
 | 5 | CUDA medido | Equivalencia CPU/GPU dentro de tolerancia, fallos de dispositivo y benchmark reproducible incluyendo transferencias |
 | 6 | Distribución | CI Windows/Linux, artefactos reproducibles, licencias y dependencias inventariadas |
 
@@ -52,8 +63,8 @@ El segundo bloque ya implementa importación OBJ, búsqueda Dijkstra XY/Z y
 comprobación de cruces de las caras originales a lo largo de cada segmento,
 incluyendo cambios de pendiente del terreno y huecos entre muestras. La
 interpolación lineal en caras originales evita rellenar agujeros por una
-triangulación global nueva. Sigue pendiente el índice espacial para escalar y
-el modelo de alineación vehicular. Véase GENERADOR_CPU.md.
+triangulación global nueva. El índice BVH ya está implementado; sigue pendiente
+el modelo de alineación vehicular. Véase GENERADOR_CPU.md para la CLI anterior.
 
 ## Entorno CUDA
 

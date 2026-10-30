@@ -7,7 +7,8 @@ vértice positivos y negativos referidos a vértices anteriores; etiquetas o/g/s
 se ignoran. Rechaza polígonos no triangulados, índices fuera de rango, caras
 degeneradas/verticales en XY, coordenadas no finitas, UV/normales y otras
 directivas no soportadas. Este es un subconjunto OBJ documentado: no pretende
-leer todo OBJ ni DXF. Nunca triangula globalmente ni rellena huecos.
+leer todo OBJ. El adaptador separado `load_dxf` incorpora 3DFACE ASCII; véase
+INTERFAZ_ROUTETEC.md. Nunca triangula globalmente ni rellena huecos.
 
 `Terrain::segment_profile` corta el segmento XY contra los triángulos mediante
 pesos baricéntricos. Reúne los límites de intervalos y comprueba sus extremos y
@@ -61,6 +62,12 @@ precisión. El informe conserva restricciones pendientes: radio, rectas, ancho
 libre, pendiente en curvas e intersecciones. Salida 0 NO significa diseño vial
 integralmente validado. No se implementó sección transversal ni normativa vial.
 
+Actualización 29-10-2026: al indicar `min_radius_m` positivo se usa el nuevo
+buscador de tangentes y arcos también en CLI. `min_straight_m` y
+`max_turn_degrees` se comprueban sobre la alineación completa. Véase
+RUTAS_Y_CORTES.md; el texto anterior de radio/rectas pendientes corresponde al
+modo Dijkstra sin geometría, conservado para proyectos anteriores.
+
 ## Pruebas y observaciones
 
 - OBJ válido/índices negativos, inválidos/triángulos degenerados.
@@ -78,13 +85,14 @@ integralmente validado. No se implementó sección transversal ni normativa vial
 
 Con V=Nx*Ny*Nz estados y K niveles de cota factibles por vecino, E<=8*V*K.
 Dijkstra cuesta O(E log V), además del costo geométrico de cada arista. El
-prototipo sin índice recorre F caras, ordena O(F) cruces y consulta cotas por
-recorrido completo: peor caso O(F² + F log F + S*F) por evaluación, con S muestras
-uniformes. Se prioriza un resultado comprobable; no se debe usar esta referencia
-como garantía de rendimiento sobre millones de triángulos. Memoria O(V+E+F) en
-peor caso incluyendo cola; los presupuestos limitan estados/expansiones/aristas.
-El siguiente trabajo de rendimiento es un índice AABB/BVH, perfiles cacheados
-y medición con topografías reales, aún no proporcionadas.
+BVH actual reduce las caras candidatas por envolvente XY para las consultas de
+cota y segmento. En casos con muchas caras superpuestas la complejidad puede
+seguir acercándose al recorrido completo y a consultas cuadráticas por arista.
+No se garantiza rendimiento sobre millones de triángulos. Memoria O(V+E+F) en
+peor caso incluyendo cola e índice; los presupuestos limitan estados,
+expansiones y aristas. Sigue pendiente medir búsquedas grandes y cachear perfiles.
 
-Sin DXF, GUI nueva, CUDA probado, zonas de exclusión, factibilidad geotécnica,
-precios reales ni datos de intervención. No se instalaron dependencias.
+DXF y GUI Qt/VTK ya están implementados y comprobados según INTERFAZ_ROUTETEC.md.
+Continúan pendientes CUDA probado, zonas de exclusión, factibilidad geotécnica,
+precios reales y datos de intervención. El entorno gráfico local añade dependencias
+aisladas en `out/viewer-deps`.

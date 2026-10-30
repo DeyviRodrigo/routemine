@@ -1,0 +1,11 @@
+name: routemine-viewer
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - qt6-main=6.10.2
+  - vtk-base=9.5.2
+  - tbb-devel=2023.1.0
+  - eigen
+  - expat=2.8.5
+  - liblzma-devel=5.8.3

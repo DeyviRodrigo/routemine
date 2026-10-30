@@ -1,0 +1,21 @@
+RouteTec 1.0.0 para Windows x64
+
+Abra RouteTec.exe o el acceso directo RouteTec del menú Inicio.
+Cargue una topografía DXF con caras 3DFACE u OBJ triangulado, seleccione
+origen y destino y calcule el recorrido. La carpeta Ejemplos contiene
+superficies de práctica, expresadas en metros.
+
+Las bibliotecas Qt, VTK y Visual C++ se incluyen en esta carpeta.
+No se necesitan Python, Visual Studio, conda, Qt o VTK instalados aparte.
+Se requiere Windows 10 versión 1809 o posterior o Windows 11 de 64 bits,
+y un controlador gráfico compatible con
+OpenGL 3.2 o posterior. Para topografías grandes se recomiendan 16 GB de RAM.
+
+Guarde sus proyectos y exportaciones en Documentos u otra carpeta propia.
+El desinstalador conserva los archivos que no fueron instalados por RouteTec.
+
+Consulte las guías de usuario e instalación entregadas junto al instalador.
+Los recorridos son propuestas preliminares verificadas respecto a los
+parámetros implementados; requieren revisión de ingeniería para obra.
+
+Las licencias y versiones de las bibliotecas están en Licencias.

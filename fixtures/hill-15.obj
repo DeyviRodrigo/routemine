@@ -1,0 +1,11 @@
+# Synthetic ridge: 15 degree natural slope on either side; 40 m across, 1000 m long.
+v 0 -500 0
+v 20 -500 5.358983848622454
+v 40 -500 0
+v 0 500 0
+v 20 500 5.358983848622454
+v 40 500 0
+f 1 2 4
+f 2 5 4
+f 2 3 5
+f 3 6 5

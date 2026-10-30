@@ -1,0 +1,16 @@
+# Real-input regression: high point to a verified lowest-floor triangle.
+# Terrain: D:/Downloads/RouteTec/Inputs/Topografia_Campo.dxf
+road_profile=routetec_monolith
+cost_profile=length_only
+start_x=783463.932734375
+start_y=8442294.6699218731
+start_z=4682.5
+finish_x=783465.77127604152
+finish_y=8445000.3668619785
+finish_z=4237.4999999999991
+max_grade_percent=10
+min_radius_m=50
+continuous_curves=1
+max_cut_m=30
+max_fill_m=30
+road_width_m=8

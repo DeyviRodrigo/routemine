@@ -1,0 +1,16 @@
+# Real-input regression: high point to a verified lowest-floor triangle.
+# Terrain: D:/Downloads/RouteTec/Inputs/Surf_2027_FB.dxf
+road_profile=routetec_monolith
+cost_profile=length_only
+start_x=793216.9903515625
+start_y=8442431.4999999981
+start_z=4447.5
+finish_x=793208.0723828125
+finish_y=8440232.9318033848
+finish_z=3420
+max_grade_percent=10
+min_radius_m=50
+continuous_curves=1
+max_cut_m=30
+max_fill_m=30
+road_width_m=8

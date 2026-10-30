@@ -4,6 +4,15 @@
 #include <string>
 int plan_command(const char* terrain_path,const char* request_path,const char* output_path,bool basic=false,bool show_only=false);
 int main(int argc,char** argv) {
+    if(argc==3 && std::string(argv[1])=="--inspect-terrain") {
+        try {
+            routemine::DxfImportReport report;
+            auto terrain=routemine::load_terrain(std::filesystem::u8path(argv[2]),&report);auto bounds=terrain.bounds();
+            std::cout<<std::setprecision(17)<<"vertices="<<terrain.vertices().size()<<"\ntriangles="<<terrain.faces().size()
+                     <<"\ndegenerate_xy_faces_skipped="<<report.degenerate_faces_skipped<<'\n';
+            for(auto p:bounds)std::cout<<"bounds="<<p.x<<','<<p.y<<','<<p.z<<'\n';return 0;
+        }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 2;}
+    }
     if(argc==5 && std::string(argv[1])=="--plan")return plan_command(argv[2],argv[3],argv[4]);
     if(argc==5 && std::string(argv[1])=="--plan-basic")return plan_command(argv[2],argv[3],argv[4],true);
     if(argc==4 && std::string(argv[1])=="--show-config")return plan_command(argv[2],argv[3],nullptr,true,true);
@@ -25,8 +34,9 @@ int main(int argc,char** argv) {
         }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 2;}
     }
     if(argc!=2 || std::string(argv[1])!="--demo") {
-        std::cout<<"RouteMine: --demo | --cost-demo | --plan terrain.obj request.txt route.csv\n"
-                 <<"--plan-basic terrain.obj endpoints.txt route.csv | --show-config terrain.obj endpoints.txt\nDXF and vehicle geometry not implemented.\n";
+        std::cout<<"RouteTec: --demo | --cost-demo | --plan terrain.obj|dxf request.txt route.csv\n"
+                 <<"--plan-basic terrain.obj|dxf endpoints.txt route.csv | --show-config terrain.obj|dxf endpoints.txt\n"
+                 <<"--inspect-terrain terrain.obj|dxf\nVehicle geometry remains unverified.\n";
         return argc==1?0:2;
     }
     try {

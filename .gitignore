@@ -1,5 +1,8 @@
 /build/
 /out/
+/entrega/
+__pycache__/
+*.py[cod]
 *.user
 *.pdb
 

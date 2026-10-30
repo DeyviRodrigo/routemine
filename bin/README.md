@@ -1,5 +1,10 @@
 # Ejecutables RouteMine 0.1.0 CPU
 
+Estos binarios corresponden a la distribución histórica de la CLI 0.1.0. Las
+pruebas y capacidades descritas a continuación pertenecen a esa revisión.
+Para las funciones actuales de RouteTec, compile el código de la raíz; los
+binarios de esta carpeta no se regeneran al modificar el código fuente.
+
 Herramienta de consola preliminar, sin instalación de Python, Qt, VTK ni CUDA.
 Descargue el repositorio completo (Code > Download ZIP) para conservar los ejemplos.
 No incluye la aplicación gráfica de RouteTec ni importación DXF.

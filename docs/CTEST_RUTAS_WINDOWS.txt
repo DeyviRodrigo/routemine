@@ -1,0 +1,110 @@
+Internal ctest changing into directory: D:/Proyectos/routemine/out/viewer
+Test project D:/Proyectos/routemine/out/viewer
+      Start  1: utm
+ 1/52 Test  #1: utm ..............................   Passed    0.09 sec
+      Start  2: grade
+ 2/52 Test  #2: grade ............................   Passed    0.02 sec
+      Start  3: invalid
+ 3/52 Test  #3: invalid ..........................   Passed    0.02 sec
+      Start  4: mesh
+ 4/52 Test  #4: mesh .............................   Passed    0.02 sec
+      Start  5: hole
+ 5/52 Test  #5: hole .............................   Passed    0.01 sec
+      Start  6: overlap
+ 6/52 Test  #6: overlap ..........................   Passed    0.01 sec
+      Start  7: cut_fill
+ 7/52 Test  #7: cut_fill .........................   Passed    0.01 sec
+      Start  8: surface
+ 8/52 Test  #8: surface ..........................   Passed    0.01 sec
+      Start  9: incomplete
+ 9/52 Test  #9: incomplete .......................   Passed    0.01 sec
+      Start 10: backend
+10/52 Test #10: backend ..........................   Passed    0.01 sec
+      Start 11: economics
+11/52 Test #11: economics ........................   Passed    0.01 sec
+      Start 12: cost_balance
+12/52 Test #12: cost_balance .....................   Passed    0.01 sec
+      Start 13: obj
+13/52 Test #13: obj ..............................   Passed    0.08 sec
+      Start 14: obj_invalid
+14/52 Test #14: obj_invalid ......................   Passed    0.02 sec
+      Start 15: generated_economics
+15/52 Test #15: generated_economics ..............   Passed    0.02 sec
+      Start 16: generated_profile
+16/52 Test #16: generated_profile ................   Passed    0.02 sec
+      Start 17: no_path
+17/52 Test #17: no_path ..........................   Passed    0.02 sec
+      Start 18: search_limits
+18/52 Test #18: search_limits ....................   Passed    0.02 sec
+      Start 19: discontinuity
+19/52 Test #19: discontinuity ....................   Passed    0.02 sec
+      Start 20: large_coordinates
+20/52 Test #20: large_coordinates ................   Passed    0.03 sec
+      Start 21: cli_plan
+21/52 Test #21: cli_plan .........................   Passed    0.11 sec
+      Start 22: config_defaults
+22/52 Test #22: config_defaults ..................   Passed    0.10 sec
+      Start 23: config_precedence
+23/52 Test #23: config_precedence ................   Passed    0.02 sec
+      Start 24: config_validation
+24/52 Test #24: config_validation ................   Passed    0.02 sec
+      Start 25: config_persistence
+25/52 Test #25: config_persistence ...............   Passed    0.03 sec
+      Start 26: config_legacy
+26/52 Test #26: config_legacy ....................   Passed    0.03 sec
+      Start 27: cli_basic
+27/52 Test #27: cli_basic ........................   Passed    0.03 sec
+      Start 28: cli_show_config
+28/52 Test #28: cli_show_config ..................   Passed    0.02 sec
+      Start 29: interface_dxf_triangles
+29/52 Test #29: interface_dxf_triangles ..........   Passed    0.12 sec
+      Start 30: interface_dxf_quads
+30/52 Test #30: interface_dxf_quads ..............   Passed    0.02 sec
+      Start 31: interface_dxf_invalid
+31/52 Test #31: interface_dxf_invalid ............   Passed    0.02 sec
+      Start 32: interface_dxf_report
+32/52 Test #32: interface_dxf_report .............   Passed    0.03 sec
+      Start 33: interface_spatial_index
+33/52 Test #33: interface_spatial_index ..........   Passed    0.02 sec
+      Start 34: interface_routetec_profile
+34/52 Test #34: interface_routetec_profile .......   Passed    0.02 sec
+      Start 35: interface_route_exports
+35/52 Test #35: interface_route_exports ..........   Passed    0.02 sec
+      Start 36: interface_cancel_search
+36/52 Test #36: interface_cancel_search ..........   Passed    0.02 sec
+      Start 37: road_slope_route
+37/52 Test #37: road_slope_route .................   Passed    0.10 sec
+      Start 38: road_large_domain
+38/52 Test #38: road_large_domain ................   Passed    0.02 sec
+      Start 39: road_hill_intervention
+39/52 Test #39: road_hill_intervention ...........   Passed    0.02 sec
+      Start 40: road_strict_ratio
+40/52 Test #40: road_strict_ratio ................   Passed    0.02 sec
+      Start 41: road_depth_limit
+41/52 Test #41: road_depth_limit .................   Passed    0.01 sec
+      Start 42: road_metadata
+42/52 Test #42: road_metadata ....................   Passed    0.02 sec
+      Start 43: road_angle_tolerance
+43/52 Test #43: road_angle_tolerance .............   Passed    0.02 sec
+      Start 44: road_cancel
+44/52 Test #44: road_cancel ......................   Passed    0.02 sec
+      Start 45: road_gap
+45/52 Test #45: road_gap .........................   Passed    0.15 sec
+      Start 46: road_precision
+46/52 Test #46: road_precision ...................   Passed    0.03 sec
+      Start 47: road_crease
+47/52 Test #47: road_crease ......................   Passed    0.02 sec
+      Start 48: project_roundtrip
+48/52 Test #48: project_roundtrip ................   Passed    0.11 sec
+      Start 49: project_legacy
+49/52 Test #49: project_legacy ...................   Passed    0.04 sec
+      Start 50: project_invalid
+50/52 Test #50: project_invalid ..................   Passed    0.03 sec
+      Start 51: project_atomic
+51/52 Test #51: project_atomic ...................   Passed    0.05 sec
+      Start 52: project_road_roundtrip
+52/52 Test #52: project_road_roundtrip ...........   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 52
+
+Total Test time (real) =   1.86 sec

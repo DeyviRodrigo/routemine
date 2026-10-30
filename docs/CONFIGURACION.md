@@ -1,7 +1,7 @@
 # Configuración básica y avanzada
 
-Implementado en `config.hpp` / `config.cpp`, compartible por núcleo, CLI y futura
-interfaz. No se ha creado GUI. La configuración de planificación se resuelve en
+Implementado en `config.hpp` / `config.cpp`, compartido por núcleo, CLI e
+interfaz Qt/VTK. La configuración de planificación se resuelve en
 un único lugar; los defaults antiguos de estructuras del núcleo siguen por
 compatibilidad de API, pero la CLI usa siempre el resolvedor central.
 
@@ -27,6 +27,14 @@ de un volquete real ni valida una vía minera. La selección se separa en:
 - `vehicle_profile`: `haul_truck_unspecified` por defecto o `unspecified`; ambos
   son marcadores sin dimensiones. No hay perfiles geométricos de vehículo
   implementados. Cualquier modelo supuesto se rechaza.
+
+La interfaz de escritorio utiliza además `road_profile=routetec_monolith`:
+pendiente 10 %, radio 50 m, corte/relleno 30 m, curvas continuas y ancho 8 m
+como configuración inicial de exploración. Los proyectos anteriores conservan
+sus valores explícitos; el perfil sin overrides mantiene compatibilidad anterior.
+Su objetivo inicial `cost_profile=length_only` fija vía=1 y los demás pesos=0;
+no representa dinero. Un precio distinto requiere `custom`. Este perfil no
+cambia los defaults de la CLI anterior. Véase INTERFAZ_ROUTETEC.md.
 
 Ejemplo sintético heredado de los fixtures, NO valores normativos: pendiente 2 %,
 corte 5 m, relleno 0 m, ancho de cálculo 1 m; vía 10 CU/m² y excavación suelo
@@ -66,13 +74,28 @@ Grupos avanzados implementados:
   `import_haul_km`, `disposal_haul_km`. La búsqueda exige reutilización cero;
   cualquier otro valor se rechaza, aunque el evaluador independiente sí la admite.
 - Precisión/recursos: `xy_spacing_m`, `z_min`, `z_max`, `z_step_m`,
-  `sample_spacing_m`, `max_samples`, `max_states`, `max_expansions`, `max_edges`.
+  `sample_spacing_m`, `max_samples`, `max_states`, `max_expansions`, `max_edges`,
+  `max_ramp_candidates` (64 candidatos reconstruidos por variante inicialmente).
 
-Radio, rectas mínimas y geometría vehicular NO son ajustes operativos todavía.
-Si se intenta introducir `min_radius_m`, `min_radius`, `min_straight_m`,
-`min_straight` o `zero_grade_on_curves`, se devuelve error explícito de función
-no implementada. Las advertencias se muestran incluso si no se introducen esas
-claves; no se inventan valores aprobados en el perfil.
+`min_radius_m`, `min_straight_m` y `max_turn_degrees` activan el buscador de
+tangentes y arcos circulares muestreados, también desde la CLI. Se requiere
+radio positivo; el ángulo debe estar en (0, 180]. Los nuevos proyectos del visor
+comienzan con 50 m, 84 m y 120°, respectivamente. Su referencia y limitaciones
+se explican en RUTAS_Y_CORTES.md. Los proyectos antiguos sin estas claves conservan
+radio/recta 0 y giro 180°: búsqueda anterior sin restricciones de alineación.
+Los alias `min_radius`, `min_straight` y `zero_grade_on_curves` se rechazan.
+
+`continuous_curves=1` activa la rampa Hybrid A* guiada por el relieve, con cota
+proyectada, arcos enlazados y vueltas completas. En este modo se aplica la
+recta mínima al invertir el sentido del giro; entre arcos del mismo sentido no
+se exige recta y no hay límite al giro acumulado. Se mantienen radio, pendiente,
+corte/relleno y separación entre vueltas. `earthwork_mode=1` permite construir
+la rasante dentro de las profundidades elegidas; `earthwork_mode=0` exige que
+siga la TIN dentro de la tolerancia. Los defaults nuevos del escritorio incluyen
+`continuous_curves=1`; el visor lo mantiene activo incluso al abrir proyectos
+anteriores. En ese caso descarta la ruta antigua y solicita recalcular; si no
+había radio positivo utiliza 50 m. La CLI conserva el modo anterior cuando falta
+esa clave. El resolvedor no aumenta silenciosamente profundidades explícitas.
 
 ## Mostrar, guardar y recuperar
 
@@ -98,11 +121,31 @@ funcionando, exige sus campos previos y también muestra/guarda configuración.
 No se sobrescriben los archivos de entrada: si CSV o snapshot apuntan a ellos,
 la operación falla y solicita otra ruta de salida.
 
-## GUI futura, sin implementar
+## Interfaz de escritorio
 
-Pantalla básica: terreno, A/B y selectores de perfiles verificados cuando
-existan. Panel avanzado plegable: grupos anteriores, mostrando valores efectivos
-y su origen. Deberá usar este mismo resolvedor y persistencia; radio/geometría
-permanecerán deshabilitados con explicación hasta implementarlos. El contexto
-minero de volquetes está confirmado; faltan modelo/dimensiones y restricciones
-validadas antes de añadir un perfil real. No se asume un volquete específico.
+La búsqueda de escritorio dispone ahora de dos variantes, descritas en
+RUTAS_Y_CORTES.md. `adaptive_resolution`, `propose_earthwork`, `detour_ratio`,
+`heading_step_degrees`, `max_shortcut_checks` y `additional_grade_degrees`
+se guardan con el proyecto. El margen angular adicional inicial es 0° y el
+umbral de rodeo es estrictamente mayor que 5 veces la conexión propuesta.
+La primera variante sigue la TIN; corte/relleno se evalúan en la segunda.
+
+`Abrir-RouteMine.bat` abre el visor Qt 6/VTK. El flujo básico contiene terreno,
+registro manual/selección 3D de A/B y pendiente. El panel avanzado plegable
+conecta las restricciones, precisión, recursos y costos soportados al mismo
+resolvedor. El guardado JSON incluye la configuración efectiva y el eje; al
+reabrir se comprueba de nuevo la ruta, incluidos sus arcos y empalmes. El grupo
+Diseño muestra radio mínimo, recta mínima y giro máximo. Restablecer valores
+también recupera estos tres valores iniciales. No existe un vehículo con dimensiones aprobadas.
+
+### Configuración local en proyectos JSON
+
+`routing.local_sections` conserva intervalos inclusivos `first`/`last` de la ruta
+con `max_grade_percent`, `min_radius_m` y `min_straight_m` locales. No se solapan
+(salvo el vértice común de intervalos contiguos). La configuración base rige en los
+otros intervalos; se validan por separado y se comprueba el recorrido completo.
+Un giro inverso en una frontera conserva la recta más exigente de los intervalos
+implicados. `routing.adjustment_attempts` y `adjustment_report` conservan el historial
+de la búsqueda con ajustes. Los proyectos sin estas claves siguen siendo válidos.
+Los rumbos de empalme usados por el optimizador son temporales; la geometría y las
+restricciones guardadas permiten revalidar independientemente el resultado.

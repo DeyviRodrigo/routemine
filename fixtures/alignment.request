@@ -1,0 +1,12 @@
+road_profile=routetec_monolith
+cost_profile=length_only
+start_x=100
+start_y=600
+start_z=0
+finish_x=1100
+finish_y=600
+finish_z=0
+max_grade_percent=10
+min_straight_m=84
+min_radius_m=50
+max_turn_degrees=120

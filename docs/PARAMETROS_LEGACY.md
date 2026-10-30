@@ -1,5 +1,9 @@
 # Parámetros del flujo Python activo
 
+Este análisis corresponde a la versión anterior indicada abajo. Para la copia
+local `D:\Downloads\RouteTec\RouteTec_3D.py` revisada el 23/10/2026 y su interfaz
+adaptada, consultar INTERFAZ_ROUTETEC.md.
+
 Fuente leída: Library `RouteTec_3D_01.py`, 319495 bytes / 10259 líneas;
 `libfile_94256cef52888191ad55a5d92d55021d`.
 Hash comunicado por el coordinador, no recalculado localmente:
@@ -48,7 +52,9 @@ El cuerpo 9052–9158 no llama `_plan_switchback_route`,
 - La banda ±5 m no equivale a dos límites configurables de corte y relleno.
 - La Delaunay XY de navegación (1148–1220) no necesariamente conserva las caras,
   huecos ni múltiples cotas de la TIN original.
-- En C++ los parámetros de radio/ancho/rectas se conservan en el contrato y se
-  declaran pendientes, sin fingir que se han verificado. Se aplican pendiente,
+- En C++ radio y rectas fueron inicialmente parámetros pendientes. Desde el
+  29-10-2026 se aplican en el modo de tangentes y arcos muestreados, junto con
+  el giro máximo; véase RUTAS_Y_CORTES.md. El ancho vehicular sigue pendiente.
+  En el modo anterior se aplican pendiente,
   modo superficie y límites independientes de corte/relleno; el segundo bloque
   comprueba además todos los cruces con las caras originales de la TIN.

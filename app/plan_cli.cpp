@@ -7,8 +7,8 @@
 int plan_command(const char* terrain_path,const char* request_path,const char* output_path,bool basic,bool show_only) {
     try {
         using namespace routemine;
-        std::ifstream mesh_input(terrain_path);if(!mesh_input)throw std::runtime_error("Cannot open terrain OBJ");
-        auto terrain=load_obj(mesh_input);
+        DxfImportReport report;auto terrain=load_terrain(std::filesystem::u8path(terrain_path),&report);
+        if(report.degenerate_faces_skipped)std::cerr<<"WARNING: omitted degenerate XY faces="<<report.degenerate_faces_skipped<<"; holes are preserved\n";
         std::ifstream input(request_path);if(!input)throw std::runtime_error("Cannot open request");
         auto config=resolve_configuration(terrain,terrain_path,read_settings(input),!basic);
         std::cout<<"# EFFECTIVE CONFIGURATION\n";write_configuration(std::cout,config);

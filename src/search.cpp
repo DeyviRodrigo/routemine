@@ -7,7 +7,12 @@
 #include <stdexcept>
 namespace routemine {
 SearchResult plan_cpu(const Terrain& terrain,Vec3 start,Vec3 finish,const Parameters& p,
-                      const UnitCosts& costs,const SearchOptions& options) {
+                      const UnitCosts& costs,const SearchOptions& options,std::stop_token stop) {
+    if(stop.stop_requested()){SearchResult r;r.status=SearchStatus::cancelled;return r;}
+    if(alignment_enabled(p)) {
+        RoadOptions road;road.propose_earthwork=false;
+        return plan_road(terrain,start,finish,p,costs,options,road,stop).surface;
+    }
     if(!finite(start)||!finite(finish))throw std::invalid_argument("Invalid endpoints");
     (void)measure(std::vector<Vec3>{start,finish});
     if(costs.reusable_cut_fraction!=0)throw std::invalid_argument("Search requires reusable_cut_fraction=0 for additive costs");
@@ -54,6 +59,7 @@ SearchResult plan_cpu(const Terrain& terrain,Vec3 start,Vec3 finish,const Parame
     std::priority_queue<Entry,std::vector<Entry>,std::greater<Entry>> queue;
     distance[first]=0;queue.emplace(0,first);SearchResult result;
     while(!queue.empty()) {
+        if(stop.stop_requested()){result.status=SearchStatus::cancelled;return result;}
         auto [cost,id]=queue.top();queue.pop();if(cost!=distance[id])continue;
         if(id==last){
             for(auto cursor=last;cursor!=none;cursor=previous[cursor])result.route.push_back(coord(cursor));
@@ -72,6 +78,7 @@ SearchResult plan_cpu(const Terrain& terrain,Vec3 start,Vec3 finish,const Parame
             double rise=h*p.max_grade_percent/100.0+1e-10;
             auto begin=std::lower_bound(zs.begin(),zs.end(),a.z-rise),end=std::upper_bound(zs.begin(),zs.end(),a.z+rise);
             for(auto it=begin;it!=end;++it){
+                if(stop.stop_requested()){result.status=SearchStatus::cancelled;return result;}
                 if(result.edges_checked>=options.max_edges){result.status=SearchStatus::budget_exceeded;return result;}
                 auto next=index(static_cast<std::size_t>(xx),static_cast<std::size_t>(yy),static_cast<std::size_t>(it-zs.begin()));
                 ++result.edges_checked;double edge;

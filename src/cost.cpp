@@ -4,16 +4,16 @@
 #include <stdexcept>
 namespace routemine {
 CostEstimate estimate_cost(std::span<const Vec3> route,const Terrain& terrain,
-                           const Parameters& p,const UnitCosts& c) {
+                           const Parameters& p,const UnitCosts& c,std::span<const AlignmentCurve> curves) {
     for(double value:{c.road_per_m2,c.soil_cut_per_m3,c.rock_cut_per_m3,c.fill_placement_per_m3,
         c.imported_material_per_m3,c.disposal_per_m3,c.haul_per_m3_km,c.rock_fraction,
         c.reusable_cut_fraction,c.internal_haul_km,c.import_haul_km,c.disposal_haul_km})
         if(!std::isfinite(value)||value<0) throw std::invalid_argument("Invalid cost input");
     if(c.rock_fraction>1||c.reusable_cut_fraction>1||p.road_width_m<=0)
         throw std::invalid_argument("Invalid fractions or road width");
-    CostEstimate result; result.validation=validate(route,terrain,p);
+    CostEstimate result; result.validation=validate(route,terrain,p,curves);
     if(!result.validation.checked_constraints_pass())
-        throw std::invalid_argument("Candidate fails grade/terrain/earthwork constraints");
+        throw std::invalid_argument(validation_failure_message(result.validation));
     auto accumulate=[&](double a,double b,double length){
         // Signed depth = terrain - projected profile. Split cut/fill crossover.
         if(a>=0 && b>=0) result.cut_m3+=(a+b)*0.5*length*p.road_width_m;
