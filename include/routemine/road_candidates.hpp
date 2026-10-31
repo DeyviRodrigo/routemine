@@ -3,7 +3,9 @@
 namespace routemine {
 struct RoadCandidateLimits {double max_intervention_length_m{100};double max_surface_grade_factor{2};};
 // A road candidate always respects the road's requested grade/radius/depths.
-// The factor applies only to the underlying terrain, never to the road profile.
+// max_surface_grade_factor is retained for saved-project compatibility.
+// Steep terrain faces are allowed when road grade, depths and continuous
+// intervention length pass; gray surface exploration has its own grade limit.
 bool validate_road_candidate(const Terrain&,const SearchResult&,const Parameters&,const RoadCandidateLimits&);
 // Gray exploration checks terrain coverage and longitudinal grade only.
 // It does not certify road geometry, width, or earthwork limits.

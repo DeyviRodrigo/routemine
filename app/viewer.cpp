@@ -301,7 +301,7 @@ RouteWindow::RouteWindow() {
     }});connect(design_terrain_,&QComboBox::currentIndexChanged,this,context_changed);connect(design_ice_risk_,&QCheckBox::toggled,this,context_changed);
     for(const auto* key:{"design_speed_kmh","design_superelevation_percent","design_altitude_m"})connect(fields_.at(key),&QDoubleSpinBox::valueChanged,this,context_changed);
     connect(apply_criteria,&QPushButton::clicked,this,[this]{refresh_design_criteria();clear_route();statusBar()->showMessage("Criterios aplicados a los parámetros del proyecto. Revise el resumen de Diseño.");});
-    auto* pending=new QLabel("Una sola búsqueda incluye recorridos sobre la superficie y variantes con corte/relleno. El eje respeta la pendiente de diseño. La pendiente longitudinal del terreno no puede superar el doble; las excepciones y las intervenciones deben caber dentro de la longitud continua configurada. El ancho separa las vueltas de cada carretera; plataforma y estabilidad requieren diseño posterior.");pending->setWordWrap(true);advanced_layout->addWidget(pending);
+    auto* pending=new QLabel("Una sola búsqueda incluye recorridos sobre la superficie y variantes con corte/relleno. La pendiente del eje se comprueba con el desnivel y la distancia horizontal. Puede cruzar caras de terreno más empinadas mediante corte/relleno, respetando las profundidades y la longitud continua configuradas. El límite del doble de pendiente corresponde a las huellas grises sobre la TIN. El ancho separa las vueltas de cada carretera; plataforma y estabilidad requieren diseño posterior.");pending->setWordWrap(true);advanced_layout->addWidget(pending);
     adaptive_=new QCheckBox("Adaptar resolución y recursos");adaptive_->setChecked(true);
     connect(adaptive_,&QCheckBox::toggled,this,[this]{if(!applying_)clear_route();});
     auto* precision=new QGroupBox("Precisión del cálculo");auto* pf=new QFormLayout(precision);
@@ -833,25 +833,39 @@ void RouteWindow::calculate(bool adjust,bool retry) {
                         self->design_reviews_[index]=ViewerDesignReview{review,requested,candidate_mode,max_intervention,branches};
                         if(candidate_mode)self->view_->set_candidate_review(review,requested.surface_tolerance_m,branches);else self->view_->set_design_review(review);
                         self->search_round_=round;self->option_diagnostics_[index]=QString::fromStdString(review.report);
-                        if(self->continuous_search_){self->result_status_->setText(candidate_mode?(review.connected?QString("Conexión A–B: %1 m · buscando mejoras").arg(concise(measure(review.connected->route).horizontal_m)):QString("%1 alternativas verificadas · explorando más recorridos").arg(review.sections.size()+branches.size())):review.connected?"Conexión conforme · buscando alternativas":QString("%1 tramos conformes · buscando más").arg(review.sections.size()));
+                        if(self->continuous_search_){self->result_status_->setText(candidate_mode?(review.connected?QString("Conexión A–B: %1 m · buscando mejoras").arg(concise(measure(review.connected->route).horizontal_m)):QString("%1 tramos verificados · conexión A–B pendiente").arg(review.sections.size()+branches.size())):review.connected?"Conexión conforme · buscando alternativas":QString("%1 tramos conformes · buscando más").arg(review.sections.size()));
                             auto summary=QString("Ronda %1 · %2 conexiones pendientes.\nPendiente %3 % · radio %4 m · recta %5 m.\nLa búsqueda sigue hasta pulsar DETENER BÚSQUEDA. Puede guardar los resultados actuales.").arg(round).arg(review.gaps.size()).arg(concise(requested.max_grade_percent),concise(requested.min_radius_m),concise(requested.min_straight_m));
+                            if(candidate_mode&&requested.max_grade_percent>0&&self->alternatives_&&self->alternatives_->surface.route.size()>=2){
+                                const auto& route=self->alternatives_->surface.route;
+                                summary+=QString("\nLongitud mínima por desnivel A–B: %1 m.").arg(concise(100*std::abs(route.back().z-route.front().z)/requested.max_grade_percent));
+                            }
                             if(candidate_mode&&review.connected)summary+=QString("\nMejor conexión A–B encontrada: %1 m. Se sigue optimizando el objetivo configurado.").arg(concise(measure(review.connected->route).horizontal_m));self->metrics_->setText(summary);}
 
-                        self->process_message_=candidate_mode?QString("Ronda %1 · exploración gris ≤ %2 % · %3 alternativas verificadas · intervención continua ≤ %4 m.").arg(round).arg(concise(2*requested.max_grade_percent)).arg(review.sections.size()+branches.size()).arg(max_intervention):QString("Ronda %1 · %2 tramos conformes · %3 conexiones pendientes; explorando más direcciones y sectores.").arg(round).arg(review.sections.size()).arg(review.gaps.size());
+                        self->process_message_=candidate_mode?QString("Ronda %1 · exploración gris ≤ %2 % · %3 tramos verificados · intervención continua ≤ %4 m.").arg(round).arg(concise(2*requested.max_grade_percent)).arg(review.sections.size()+branches.size()).arg(max_intervention):QString("Ronda %1 · %2 tramos conformes · %3 conexiones pendientes; explorando más direcciones y sectores.").arg(round).arg(review.sections.size()).arg(review.gaps.size());
                         self->update_controls();self->update_process();
                         self->message_->setText(candidate_mode?"Gris: exploración. Exceso ascendente: rojo; descendente: verde, en el sentido del trazo (hasta 2× la pendiente). Celeste: cumple los criterios comprobados del eje. Se conservan los sectores explorados y se sigue buscando; el usuario elegirá la ruta.":QString("Corredor gris. %1 tramos conformes; %2 intervalos por conectar. Azul claro: preferido por longitud entre conexiones equivalentes. Los extremos naranjas requieren decisión de diseño.").arg(review.sections.size()).arg(review.gaps.size()));
                     }},Qt::QueuedConnection);};
                     if(candidate_mode){
                         RoadCandidateLimits candidate_limits;candidate_limits.max_intervention_length_m=max_intervention;
                         std::size_t round_now=0,branch_vertices=0;
+                        QElapsedTimer branch_publish;branch_publish.start();
                         auto review_update=[&](const DesignReview& value,std::size_t round){round_now=round;assessment.review=value;publish(value,round,assessment.branches);};
                         auto branch_update=[&](const SearchResult& branch){
                             // Archive every checked candidate for live drawing, even
                             // when the bounded list of exportable roads is full.
                             trace->record(branch.route,true);
+                            // Keep extensions visible when an earlier prefix was archived.
+                            for(auto it=assessment.branches.begin();it!=assessment.branches.end();){
+                                if(it->route.size()<branch.route.size()&&std::equal(it->route.begin(),it->route.end(),branch.route.begin(),[](Vec3 a,Vec3 b){return std::hypot(a.x-b.x,a.y-b.y)<1e-6;})){
+                                    branch_vertices-=it->route.size();it=assessment.branches.erase(it);
+                                }else ++it;
+                            }
                             if(assessment.branches.size()>=256||branch_vertices+branch.route.size()>800000)return;
                             for(const auto& old:assessment.branches)if(old.route.size()==branch.route.size()&&std::equal(old.route.begin(),old.route.end(),branch.route.begin(),[](Vec3 a,Vec3 b){return std::hypot(a.x-b.x,a.y-b.y)<1e-6&&std::abs(a.z-b.z)<1e-6;}))return;
-                            assessment.branches.push_back(branch);branch_vertices+=branch.route.size();publish(assessment.review,round_now,assessment.branches);
+                            assessment.branches.push_back(branch);branch_vertices+=branch.route.size();
+                            // Batch live geometry: one queued redraw per candidate can
+                            // bury stop/progress events behind hundreds of full renders.
+                            if(branch_publish.elapsed()>=500){publish(assessment.review,round_now,assessment.branches);branch_publish.restart();}
                         };
                         auto exploratory=[trace](std::span<const Vec3> path){
                             // Preserve each original TIN segment: display thinning must not

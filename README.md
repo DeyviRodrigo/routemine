@@ -21,7 +21,13 @@ S/O de tangente. Las curvas contiguas del mismo sentido siguen permitidas.
 El radio operativo inicial es 30 m; la recta solicitada, 35 m; la pendiente,
 10%; y los límites independientes de corte y relleno, 2 m. Los valores efectivos
 dependen del perfil seleccionado. La intervención continua inicial de 100 m es
-configurable e independiente del límite de 2× pendiente para explorar.
+configurable. El límite de 2× pendiente corresponde a las huellas grises sobre
+la TIN. Una cara más empinada puede cruzarse con una rasante que cumpla la
+pendiente, el corte/relleno y la longitud de intervención configurados.
+La pendiente se calcula como 100 × desnivel / distancia horizontal, con
+comprobación de las profundidades en todos los cruces de caras de la TIN.
+La búsqueda conserva caminos conectados desde A y B entre rondas, y los
+prolonga con rectas y curvas tangentes. Es una exploración acotada en memoria.
 
 La leyenda muestra **gris** para exploración sobre la TIN; **rojo/verde** para
 exceso ascendente/descendente de pendiente, hasta 2× la máxima y en el sentido

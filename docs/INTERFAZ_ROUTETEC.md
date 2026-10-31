@@ -345,9 +345,11 @@ guarda como geometría de carretera en el proyecto.
 
 Cada carretera conserva la pendiente máxima del eje, radio, rectas de avance,
 separación entre sus vueltas y profundidades máximas de corte/relleno configuradas.
-Además, la pendiente longitudinal del terreno debajo del eje no puede superar el
-doble de la pendiente de diseño. Los excesos entre el máximo normal y el doble,
-y los tramos continuos que necesitan corte/relleno, no pueden superar **100 m**
+La pendiente del eje se calcula con desnivel y distancia horizontal. Una cara
+de terreno más empinada puede cruzarse con una rasante de menor pendiente si
+cumple las profundidades de corte/relleno, comprobadas en los cruces de la TIN.
+El límite del doble de pendiente se aplica a las huellas grises de superficie.
+Los tramos continuos que necesitan corte/relleno no pueden superar **100 m**
 por defecto. Este valor se cambia en **Configuración avanzada > Diseño > Longitud
 continua máxima de intervención (m)**. No se eleva la pendiente del eje para admitir
 un candidato que requiera intervención.

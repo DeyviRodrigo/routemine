@@ -4,6 +4,8 @@
 #include <cmath>
 #include <condition_variable>
 #include <mutex>
+#include <map>
+#include <tuple>
 #include <numbers>
 #include <numeric>
 #include <sstream>
@@ -104,14 +106,9 @@ bool validate_road_candidate(const Terrain& terrain,const SearchResult& candidat
     if(candidate.status!=SearchStatus::found||candidate.route.size()<2||!candidate.local_sections.empty())return false;const auto p=unified(original);
     try{
         if(!validate(candidate.route,terrain,p,candidate.curves).checked_constraints_pass())return false;
-        double exceptional=0;
-        for(std::size_t i=1;i<candidate.route.size();++i){auto ground=terrain.segment_profile(candidate.route[i-1],candidate.route[i]);if(!ground)return false;
-            for(std::size_t j=1;j<ground->size();++j){auto a=(*ground)[j-1],b=(*ground)[j];double h=dist(a,b);if(h<=1e-8)continue;double grade=100*std::abs(b.z-a.z)/h;
-                if(grade>p.max_grade_percent*limits.max_surface_grade_factor+1e-6)return false;
-                if(grade>p.max_grade_percent+1e-6)exceptional+=h;else exceptional=0;
-                if(exceptional>limits.max_intervention_length_m+1e-6)return false;
-            }
-        }
+        // Terrain face grade is not road grade. A short steep face may be
+        // crossed by a longer compliant vertical alignment with excavation.
+        // validate() checks the road grade and depths at every TIN crossing.
         double intervention=0;for(const auto& segment:earthwork_segments(terrain,candidate.route,p.surface_tolerance_m)){
             if(segment.kind==EarthworkKind::surface)intervention=0;else intervention+=dist(segment.first,segment.last);
             if(intervention>limits.max_intervention_length_m+1e-6)return false;
@@ -124,7 +121,7 @@ DesignReview explore_road_candidates(const Terrain& terrain,const SearchResult& 
     if(original.min_radius_m<=0||!std::isfinite(original.min_radius_m))throw std::invalid_argument("Se requiere un radio mínimo positivo para generar carreteras curvas.");
     (void)measure(reference.route);auto p=unified(original);const bool guide_only=reference.strategy=="candidate_guide";const auto station=stations(reference.route);const double total=station.back(),minimum=std::max({2*p.min_radius_m,p.min_straight_m,4*p.road_width_m,40.});DesignReview review;
     const auto bounds=terrain.bounds();Vec3 lowcenter{};double weight=0;for(auto q:terrain.vertices()){double w=std::pow(std::max(0.,bounds[1].z-q.z),2);lowcenter.x+=w*q.x;lowcenter.y+=w*q.y;weight+=w;}if(weight>0){lowcenter.x/=weight;lowcenter.y/=weight;}else lowcenter={std::midpoint(bounds[0].x,bounds[1].x),std::midpoint(bounds[0].y,bounds[1].y),0};
-    auto publish=[&](std::size_t round){gaps(review,reference.route,station);std::ostringstream text;text<<"Alternativas viales: ronda "<<round<<". Rectas y curvas tangentes; radios y separación del diseño original.\n"<<"Pendiente de carretera ≤ "<<p.max_grade_percent<<" %; terreno ≤ "<<p.max_grade_percent*limits.max_surface_grade_factor<<" % y excesos/intervenciones continuos ≤ "<<limits.max_intervention_length_m<<" m.\n"<<review.sections.size()<<" alternativas ancladas, con longitudes distintas; no se eliminan por ser largas.\n";review.report=text.str();if(update)update(review,round);};
+    auto publish=[&](std::size_t round){gaps(review,reference.route,station);std::ostringstream text;text<<"Alternativas viales: ronda "<<round<<". Rectas y curvas tangentes; radios y separación del diseño original.\n"<<"Pendiente de carretera ≤ "<<p.max_grade_percent<<" %; corte/relleno continuo ≤ "<<limits.max_intervention_length_m<<" m.\n"<<review.sections.size()<<" alternativas ancladas, con longitudes distintas; no se eliminan por ser largas.\n";review.report=text.str();if(update)update(review,round);};
     auto emit=[&](SearchResult candidate,bool fix_end){if(stop.stop_requested()||candidate.route.size()<2||measure(candidate.route).horizontal_m<minimum)return false;
         if(!profile(candidate,terrain,p,costs,fix_end)||!validate_road_candidate(terrain,candidate,p,limits))return false;
         if(branch)branch(candidate);if(options.trace)options.trace(candidate.route,true);return true;};
@@ -159,6 +156,79 @@ DesignReview explore_road_candidates(const Terrain& terrain,const SearchResult& 
     };
     auto road=options;road.trace={};road.adaptive_resolution=false;road.first_feasible=true;road.propose_earthwork=false;road.max_ramp_candidates=std::min<std::size_t>(16,options.max_ramp_candidates);
     auto search_limits=resources;search_limits.max_states=std::min<std::size_t>(resources.max_states,6000);search_limits.max_expansions=std::min<std::size_t>(resources.max_expansions,700);search_limits.max_edges=std::min<std::size_t>(resources.max_edges,14000);
+    // Retain complete endpoint-rooted paths across rounds. Unlike independent
+    // contour walks, these states keep their incoming tangent and turn history.
+    struct Front {SearchResult path;double heading{},last_turn{},straight{},length{},score{};};
+    std::vector<Front> frontier;
+    using Key=std::tuple<long long,long long,int,long long,int,int,bool>;
+    std::map<Key,double> reached;
+    auto potential=[&](Vec3 q,Vec3 goal){
+        const double grade=p.max_grade_percent/100;
+        return std::max(dist(q,goal),grade>0?std::abs(q.z-goal.z)/grade:0.);
+    };
+    auto seed_frontier=[&]{
+        for(bool reverse:{false,true}){
+            const auto start=reverse?reference.route.back():reference.route.front();
+            const auto goal=reverse?reference.route.front():reference.route.back();
+            std::vector<double> headings;
+            if(auto gradient=terrain.surface_gradient(start.x,start.y,false)){
+                const double slope=std::hypot((*gradient)[0],(*gradient)[1]),up=std::atan2((*gradient)[1],(*gradient)[0]);
+                const double sign=goal.z>=start.z?1.:-1.;
+                if(slope>1e-8)for(double grade:{.8*sign,0.,-.8*sign}){
+                    const double offset=std::acos(std::clamp(grade*p.max_grade_percent/100/slope,-1.,1.));
+                    headings.push_back(up+offset);headings.push_back(up-offset);
+                }
+            }
+            for(int i=0;i<16;++i)headings.push_back(angle(start,goal)+i*pi/8);
+            for(double h:headings){Builder seed(terrain,p,start,stop);
+                frontier.push_back({seed.result,h,0,0,0,potential(start,goal)});}
+        }
+    };
+    seed_frontier();
+    auto advance_frontier=[&]{
+        const auto cap=std::min<std::size_t>(512,resources.max_states);
+        for(int expansion=0;expansion<4&&!frontier.empty()&&!stop.stop_requested();++expansion){
+            auto best=std::min_element(frontier.begin(),frontier.end(),[](const Front& a,const Front& b){return a.score<b.score||(a.score==b.score&&a.length>b.length);});
+            auto node=std::move(*best);frontier.erase(best);
+            const bool reverse=same(node.path.route.front(),reference.route.back());
+            const auto goal=reverse?reference.route.front():reference.route.back();
+            Builder prefix(terrain,p,node.path.route.front(),stop);prefix.result=node.path;
+            if(node.path.route.size()>1)connect_prefix(prefix,node.heading);
+            for(double scale:{.2,.5,1.,3.,6.})for(double turn:{0.,-.25,.25,-1.,1.}){
+                if(stop.stop_requested())return;
+                if(turn*node.last_turn<0&&node.straight+1e-6<p.min_straight_m)continue;
+                if(turn!=0&&node.straight>1e-6&&node.last_turn!=0&&node.straight+1e-6<
+                    (turn*node.last_turn>0?std::max(p.min_straight_m,p.min_straight_same_direction_m):p.min_straight_m))continue;
+                double length=scale*std::max({10.,p.min_straight_m,p.min_radius_m*.5});
+                if(turn!=0)length=std::min(length,p.min_radius_m*pi/3);
+                const double curvature=turn/p.min_radius_m,h=node.heading+curvature*length;
+                const auto current=node.path.route.back();Vec3 next;
+                if(turn==0)next={current.x+length*std::cos(h),current.y+length*std::sin(h),0};
+                else next={current.x+(std::sin(h)-std::sin(node.heading))/curvature,current.y+(std::cos(node.heading)-std::cos(h))/curvature,0};
+                Builder trial(terrain,p,node.path.route.front(),stop);trial.result=node.path;
+                if(!(turn==0?trial.append(next):trial.arc(current,node.heading,next)))continue;
+                if(!profile(trial.result,terrain,p,costs,false)||!validate_road_candidate(terrain,trial.result,p,limits))continue;
+                const auto q=trial.result.route.back();const double traveled=node.length+length;
+                const double straight=turn==0?node.straight+length:0,last_turn=turn==0?node.last_turn:turn;
+                const double cell=std::max(5.,resources.xy_spacing_m);
+                Key key{std::llround((q.x-bounds[0].x)/cell),std::llround((q.y-bounds[0].y)/cell),
+                    static_cast<int>(std::llround(wrap(h)/(pi/36)))%72,std::llround(q.z*2),
+                    static_cast<int>(std::copysign(1.,last_turn))*(last_turn!=0),static_cast<int>(std::min(2.,straight/std::max(1.,p.min_straight_m))),reverse};
+                auto old=reached.find(key);if(old!=reached.end()&&old->second<=traveled)continue;
+                if(old==reached.end()&&reached.size()>=resources.max_states)continue;
+                reached[key]=traveled;
+                trial.result.strategy="connected_frontier";
+                if(traveled>=minimum){if(branch)branch(trial.result);if(options.trace)options.trace(trial.result.route,true);}
+                const double score=traveled+potential(q,goal);
+                frontier.push_back({std::move(trial.result),h,last_turn,straight,traveled,score});
+            }
+            // Bound both state count and the retained full-path geometry.
+            std::sort(frontier.begin(),frontier.end(),[](const Front& a,const Front& b){return a.score<b.score||(a.score==b.score&&a.length>b.length);});
+            std::size_t vertices=0,keep=0;
+            for(const auto& item:frontier){if(keep>=cap||item.path.route.size()>800000-vertices)break;vertices+=item.path.route.size();++keep;}
+            frontier.resize(keep);
+        }
+    };
     std::condition_variable_any wake;std::mutex mutex;std::size_t round=0;publish(round);
     while(!stop.stop_requested()){
         ++round;
@@ -190,6 +260,7 @@ DesignReview explore_road_candidates(const Terrain& terrain,const SearchResult& 
         // must not prevent a later cheaper/shorter incumbent from replacing it.
         if(!stop.stop_requested()){Builder direct(terrain,p,start_anchor,stop,exploratory,2*original.max_grade_percent);
             if(direct.append(finish_anchor)){direct.result.route.back()=finish_anchor;direct.result.strategy="direct_connection";accept(std::move(direct.result),0,total);}}
+        advance_frontier();
         double first=0,last=total;if(round%3){double span=std::min(total,minimum*(2+10*fraction(round,3)));first=(total-span)*fraction(round,5);last=first+span;}
         auto a=at(reference.route,station,first),b=at(reference.route,station,last);
         if(guide_only){auto za=terrain.elevation(a.x,a.y),zb=terrain.elevation(b.x,b.y);

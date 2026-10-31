@@ -18,9 +18,40 @@ int main(int argc,char** argv){try{check(argc==2);const std::string test=argv[1]
         check(!validate_road_candidate(plane(0,1),line(200),p,limits),"long continuous cut accepted");
         check(!validate_road_candidate(plane(),line(80,0.15),p,limits),"road itself exceeded requested grade");
         check(validate_road_candidate(plane(0.15),line(80,0.1),p,limits),"short terrain exception below2x rejected");
-        check(!validate_road_candidate(plane(0.25),line(80,0.1),p,limits),"terrain above2x accepted");
+        check(validate_road_candidate(plane(0.25),line(80,0.1),p,limits),"steep terrain rejected despite compliant road and cut");
         check(!validate_road_candidate(plane(0.15),line(200,0.1),p,limits),"long slope/intervention accepted");
         limits.max_intervention_length_m=250;check(validate_road_candidate(plane(0,1),line(200),p,limits));
+    }else if(test=="steep_step"){
+        // Two metres over two metres of terrain (100%) must not prohibit
+        // a road that gains those two metres over its full 80 m alignment.
+        Terrain terrain({{0,-250,0},{39,-250,0},{41,-250,2},{80,-250,2},
+                         {0,250,0},{39,250,0},{41,250,2},{80,250,2}},
+                        {{0,1,4},{1,5,4},{1,2,5},{2,6,5},{2,3,6},{3,7,6}});
+        p.max_cut_m=2;p.max_fill_m=0;
+        SearchResult guide;guide.strategy="candidate_guide";guide.route={{0,0,0},{80,0,2}};
+        SearchOptions resources;resources.max_states=80;resources.max_expansions=20;resources.max_edges=200;
+        RoadOptions road;road.max_ramp_candidates=4;std::stop_source stop;
+        auto review=explore_road_candidates(terrain,guide,p,UnitCosts{},resources,road,limits,stop.get_token(),
+            [&](const DesignReview&,std::size_t round){if(round>=1)stop.request_stop();});
+        check(review.connected.has_value(),"short steep face prevented a complete excavated alignment");
+        check(validate_road_candidate(terrain,*review.connected,p,limits));
+        check(review.connected->estimate->validation.max_cut_m>1,"road did not account for excavation");
+        auto no_cut=p;no_cut.max_cut_m=0;
+        check(!validate_road_candidate(terrain,*review.connected,no_cut,limits),"cut depth limit ignored");
+        auto short_intervention=limits;short_intervention.max_intervention_length_m=1;
+        check(!validate_road_candidate(terrain,*review.connected,p,short_intervention),"continuous intervention limit ignored");
+    }else if(test=="frontier"){
+        auto terrain=plane();SearchResult guide;guide.strategy="candidate_guide";guide.route={{-800,0,0},{800,0,0}};
+        SearchOptions resources;resources.max_states=2000;resources.max_expansions=20;resources.max_edges=200;
+        RoadOptions road;road.max_ramp_candidates=4;std::stop_source stop;std::size_t round=0;double early=0,longest=0;
+        explore_road_candidates(terrain,guide,p,UnitCosts{},resources,road,limits,stop.get_token(),
+            [&](const DesignReview&,std::size_t value){round=value;if(value==1)early=longest;if(value>=3)stop.request_stop();},
+            [&](const SearchResult& c){if(c.strategy!="connected_frontier")return;
+                check(validate_road_candidate(terrain,c,p,limits));
+                check(std::abs(c.route.front().x)==800&&c.route.front().y==0,"frontier lost its endpoint root");
+                longest=std::max(longest,measure(c.route).horizontal_m);
+            });
+        check(round>=3&&early>0&&longest>early+100,"connected frontier restarted instead of extending previous routes");
     }else if(test=="geometry"){
         auto bend=arc();check(validate_road_candidate(plane(),bend,p,limits),"smooth tangent arc rejected");
         auto sharp=line(100);sharp.route.push_back({100,100,0});check(!validate_road_candidate(plane(),sharp,p,limits),"unmodelled sharp corner accepted");
@@ -29,7 +60,7 @@ int main(int argc,char** argv){try{check(argc==2);const std::string test=argv[1]
     }else if(test=="rounds"){
         auto terrain=plane();auto ref=line(600);ref.route={{-300,0,0},{300,0,0}};SearchOptions resource;resource.max_states=80;resource.max_expansions=20;resource.max_edges=200;RoadOptions road;road.max_ramp_candidates=4;UnitCosts costs;costs.road_per_m2=1;
         std::stop_source stop;std::size_t branches=0,rounds=0;bool curved=false,long_path=false;
-        road.trace=[&](std::span<const Vec3> path,bool complete){check(complete,"unchecked geometric trace emitted");check(path.size()>2,"raw ray emitted");};
+        road.trace=[&](std::span<const Vec3> path,bool complete){check(complete,"unchecked geometric trace emitted");check(path.size()>=2,"empty road emitted");};
         auto review=explore_road_candidates(terrain,ref,p,costs,resource,road,limits,stop.get_token(),[&](const DesignReview& r,std::size_t round){check(validate_design_review(terrain,r,p));rounds=round;if(round>=3)stop.request_stop();},[&](const SearchResult& candidate){++branches;check(validate_road_candidate(terrain,candidate,p,limits),"branch violated original constraints");curved|=!candidate.curves.empty();long_path|=measure(candidate.route).horizontal_m>600;});
         check(rounds>=3&&branches>0&&curved,"no valid curved candidates generated");check(long_path,"long alternatives were suppressed");check(validate_design_review(terrain,review,p));
     }else if(test=="contours"){

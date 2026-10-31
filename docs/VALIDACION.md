@@ -375,3 +375,34 @@ alternativas verificadas. `--smoke-guide-fallback` comprobó dos parches descone
 La prueba `--smoke-candidates` con los A/B de la captura encontró 18 ramas verificadas,
 sin afirmar una conexión vial completa. CTest: 123/123. Evidencia en
 `out/coverage-fix-qa/`.
+
+## Rasante sobre caras empinadas y crecimiento conectado (2026-10-31)
+
+La búsqueda unificada conserva caminos desde A y B entre rondas, con dirección
+de entrada y antecedentes de giro/tangente. Prueba distancias distintas y salidas
+de contorno/pendiente calculadas con el gradiente local. La frontera tiene límites
+de estados y vértices: no es una enumeración exhaustiva ni prueba imposibilidad.
+
+Se eliminó el rechazo de una carretera por superar la pendiente local del terreno
+el doble de la pendiente de diseño. La rasante sigue pasando pendiente, geometría,
+profundidad en cruces TIN y longitud continua de corte/relleno. El filtro del doble
+se conserva para las huellas grises que siguen la superficie.
+
+Regresiones `road_candidate_steep_step` (escalón de 2 m en 2 m, conexión de 80 m
+con corte limitado a 2 m y sin relleno) y `road_candidate_frontier` (prolongación
+de caminos anclados entre rondas). Se comprueba también el rechazo al quitar el
+corte permitido o reducir la intervención continua. Release y CTest: **139/139**.
+
+`--smoke-candidates` en una TIN plana de 1000 × 1000 m pasó búsqueda de curvas,
+conexión A–B, guardado en vivo, detención y reapertura, con 115 ramas conservadas.
+Se agrupan publicaciones de ramas cada 500 ms para evitar una cola de redibujados
+por cada candidato. Evidencia: `out/connected-qa/gui-final/`.
+
+En `Surf_2027_FB.dxf`, con A=(793258.29825673858, 8442308.4375220686, 4447.5),
+B=(793275.98275324795, 8440465.1388536561, 3435), pendiente 10 %, radio 30 m,
+recta 35 m y corte/relleno 2 m, el ensayo con cancelación a los 45 s completó
+4 rondas, emitió 13 tramos (máximo 156.149 m; frontera conectada 105 m) y
+**no encontró conexión A–B**. No acredita que no exista. El mínimo horizontal
+por desnivel es 10125 m. La pantalla distingue los tramos de la conexión completa.
+Registro: `out/connected-qa/real-final-probe.log`; pruebas:
+`out/connected-final-ctest.log`.
