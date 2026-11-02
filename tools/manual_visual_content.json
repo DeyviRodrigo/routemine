@@ -1,0 +1,351 @@
+[
+  {
+    "id": "portada",
+    "title": "Guía visual de usuario de RouteTec",
+    "kicker": "Primeros pasos · Edición del 1 de noviembre de 2026",
+    "steps": [
+      "Abra el programa y cargue el terreno: páginas 2 a 6.",
+      "Indique A y B y revise el diseño: páginas 7 a 12.",
+      "Busque y revise los resultados: páginas 13 a 17.",
+      "Guarde y exporte: páginas 18 a 21. Consulte ajustes opcionales y ayuda en las páginas 22 a 30."
+    ],
+    "note": "Siga los números de cada imagen y la instrucción del mismo número. Use los datos de su propio proyecto."
+  },
+  {
+    "id": "iniciar",
+    "title": "Abrir el programa",
+    "kicker": "En este equipo: D:\\Proyectos\\routemine",
+    "steps": [
+      "Abra D:\\Proyectos\\routemine en el Explorador de archivos.",
+      "Haga doble clic en Abrir-RouteTec.bat.",
+      "Espere a ver la pantalla principal. Tenga a mano su terreno DXF u OBJ."
+    ],
+    "note": "El nombre del lanzador en esta carpeta es Abrir-RouteTec.bat. Conserve los archivos del programa en sus carpetas."
+  },
+  {
+    "id": "pantalla",
+    "title": "Reconocer las zonas de trabajo",
+    "kicker": "Antes del primer clic",
+    "steps": [
+      "Ubique Terreno, donde cargará la topografía.",
+      "Ubique A · ORIGEN y B · DESTINO, donde definirá los extremos.",
+      "Observe el terreno en la zona grande de la derecha.",
+      "Desplace el panel izquierdo hacia abajo para consultar Resultados."
+    ],
+    "note": "Los menús Archivo, Configuración, Vistas y Ayuda están en la parte superior."
+  },
+  {
+    "id": "cargar",
+    "title": "Cargar la topografía",
+    "kicker": "Primer paso del proyecto",
+    "steps": [
+      "Pulse CARGAR TOPOGRAFÍA DXF / OBJ.",
+      "Abra la carpeta que contiene su levantamiento.",
+      "Seleccione el archivo DXF u OBJ y confirme su apertura."
+    ],
+    "note": "Use una malla de terreno con alturas, en metros. Un DXF formado solo por líneas o curvas de nivel no basta."
+  },
+  {
+    "id": "carga_progreso",
+    "title": "Esperar a que aparezca el terreno",
+    "kicker": "Carga del archivo",
+    "steps": [
+      "Observe la actividad y el avance de carga.",
+      "Pulse MINIMIZAR si desea ocultar la ventana de progreso; VER PROGRESO la muestra de nuevo.",
+      "Espere a ver el nombre del archivo, sus triángulos y el terreno antes de marcar puntos."
+    ],
+    "note": "Cancelar cálculo solicita detener la carga. Cerrar o minimizar la ventana de progreso mantiene la operación en marcha."
+  },
+  {
+    "id": "vistas",
+    "title": "Orientar la vista del terreno",
+    "kicker": "Mirar antes de seleccionar",
+    "steps": [
+      "Abra Vistas y seleccione Top para mirar desde arriba, o ISO para una vista oblicua.",
+      "Use Acercar y Alejar, o la rueda del ratón, para cambiar el tamaño visible.",
+      "Arrastre con el botón izquierdo para girar; con el central para desplazar la vista.",
+      "Pruebe Front, Back, Left, Right o Bot cuando necesite otra orientación."
+    ],
+    "note": "Estos movimientos cambian la cámara, no las coordenadas del proyecto."
+  },
+  {
+    "id": "origen",
+    "title": "Marcar el origen A sobre el terreno",
+    "kicker": "Selección con el ratón",
+    "steps": [
+      "Pulse MARCAR A EN 3D.",
+      "Haga clic izquierdo sobre la superficie donde comenzará el recorrido.",
+      "Compruebe que aparezca A y que se llenen sus campos X, Y y Z."
+    ],
+    "note": "La selección registra el punto automáticamente y toma la altura del terreno. No necesita pulsar REGISTRAR después."
+  },
+  {
+    "id": "destino",
+    "title": "Marcar el destino B sobre el terreno",
+    "kicker": "Completar los extremos",
+    "steps": [
+      "Pulse MARCAR B EN 3D.",
+      "Haga clic izquierdo sobre la superficie donde terminará el recorrido.",
+      "Compruebe el marcador B y sus coordenadas X, Y y Z."
+    ],
+    "note": "A y B deben ser diferentes. Si el clic no marca un punto, pruebe sobre una cara visible del terreno."
+  },
+  {
+    "id": "coordenadas",
+    "title": "Escribir las coordenadas manualmente",
+    "kicker": "Alternativa a marcar en 3D",
+    "steps": [
+      "Escriba X y Y: la posición horizontal del punto en el sistema de su topografía.",
+      "Escriba Z: la altura del punto, en metros.",
+      "Pulse REGISTRAR en el cuadro de ese punto.",
+      "Repita los tres campos y REGISTRAR para el otro extremo."
+    ],
+    "note": "Use punto decimal y ningún separador de miles. Si modifica un campo, vuelva a registrar el punto."
+  },
+  {
+    "id": "contexto_diseno",
+    "title": "Revisar el contexto de diseño",
+    "kicker": "Configuración > Diseño…",
+    "steps": [
+      "Seleccione Criterios de diseño; conserve Exploración preliminar para familiarizarse con el programa.",
+      "Revise Velocidad de diseño y Orografía (tipo de relieve), según el proyecto.",
+      "Revise Peralte de referencia (inclinación transversal de la vía) y Considerar riesgo de hielo.",
+      "Revise Altitud de referencia; el valor 0 usa la máxima altura de la topografía."
+    ],
+    "note": "DG2018 tercera clase requiere una combinación admitida de velocidad y orografía. Lea el resumen del diálogo."
+  },
+  {
+    "id": "geometria",
+    "title": "Revisar pendiente, recta y radio",
+    "kicker": "Configuración > Diseño…",
+    "steps": [
+      "Revise Pendiente máxima (%): el límite de subida o bajada.",
+      "Revise Recta mínima de avance (m), necesaria al invertir el sentido de giro.",
+      "Revise Radio mínimo de curva (m): un radio mayor produce curvas más abiertas.",
+      "Pulse Aplicar criterios de diseño, lea los valores efectivos y pulse Cerrar."
+    ],
+    "note": "2 m de desnivel en 20 m horizontales equivalen al 10 %. Extender los límites amplía los rangos editables."
+  },
+  {
+    "id": "intervencion",
+    "title": "Definir corte, relleno y ancho",
+    "kicker": "Configuración > Configuración avanzada… > Diseño",
+    "steps": [
+      "Indique Corte máximo: profundidad permitida bajo el terreno; inicial 2 m.",
+      "Indique Relleno máximo: altura permitida sobre el terreno; inicial 2 m.",
+      "Revise Longitud continua máxima de intervención: tramo seguido con corte o relleno; inicial 100 m.",
+      "Revise Ancho de cálculo: ancho usado en las estimaciones; inicial 8 m. Pulse Cerrar."
+    ],
+    "note": "Cero prohíbe ese corte o relleno. Una cara empinada puede cruzarse si la rasante y la intervención cumplen los límites."
+  },
+  {
+    "id": "buscar",
+    "title": "Iniciar la búsqueda de rutas",
+    "kicker": "Terreno y extremos preparados",
+    "steps": [
+      "Compruebe que el terreno esté cargado y A y B estén registrados.",
+      "Pulse BUSCAR RUTAS POSIBLES.",
+      "Observe cómo aparecen los recorridos y cómo cambia la información de Resultados."
+    ],
+    "note": "La búsqueda incluye variantes sobre el terreno y con corte o relleno. Los controles de edición se bloquean mientras trabaja."
+  },
+  {
+    "id": "detener",
+    "title": "Seguir el avance y detener la búsqueda",
+    "kicker": "La búsqueda es continua",
+    "steps": [
+      "Observe la ronda y el estado de la conexión A–B en Resultados.",
+      "Pulse VER PROGRESO para consultar la ventana de avance.",
+      "Pulse DETENER BÚSQUEDA cuando quiera revisar los resultados disponibles.",
+      "Espere a que termine la detención antes de exportar o cambiar parámetros."
+    ],
+    "note": "Encontrar una conexión no detiene la exploración automáticamente. El programa puede seguir buscando mejoras."
+  },
+  {
+    "id": "colores",
+    "title": "Interpretar los colores de exploración",
+    "kicker": "Lea la leyenda de esta vista",
+    "steps": [
+      "Identifique el gris como exploración sobre el terreno.",
+      "Identifique rojo y verde como exceso de pendiente ascendente y descendente, respectivamente.",
+      "Identifique el celeste como candidatos que cumplen las comprobaciones del eje.",
+      "Consulte la escala de Cota (m) para interpretar los colores del terreno."
+    ],
+    "note": "Aquí rojo y verde indican pendiente, no corte y relleno. Vistas > Mostrar exploración permite ocultar o mostrar las huellas."
+  },
+  {
+    "id": "conexion",
+    "title": "Comprobar si existe una conexión A–B",
+    "kicker": "Antes de dar por terminado el recorrido",
+    "steps": [
+      "Lea Resultados: conexión A–B pendiente significa que todavía faltan conexiones.",
+      "Busque una indicación explícita de Conexión A–B y su longitud.",
+      "Revise los extremos y las vueltas usando Top e ISO."
+    ],
+    "note": "Muchos tramos celestes no equivalen a una carretera completa. Con 100 m de desnivel y pendiente máxima 10 %, hacen falta al menos 1000 m horizontales."
+  },
+  {
+    "id": "detalles",
+    "title": "Consultar los detalles del resultado",
+    "kicker": "Ayuda > Detalles del resultado…",
+    "steps": [
+      "Abra Ayuda y pulse Detalles del resultado….",
+      "Lea el estado de la conexión, los parámetros y los mensajes de comprobación.",
+      "Desplace el texto para revisar toda la información y pulse Cerrar."
+    ],
+    "note": "No encontrar conexión en un ensayo no demuestra que sea imposible. El resultado es preliminar y requiere revisión de ingeniería."
+  },
+  {
+    "id": "guardar",
+    "title": "Guardar el proyecto para continuar después",
+    "kicker": "Archivo > Guardar proyecto",
+    "steps": [
+      "Abra Archivo y pulse Guardar proyecto, o use Ctrl+S.",
+      "En el primer guardado, elija la carpeta y escriba un nombre terminado en .json.",
+      "Confirme el guardado y compruebe el mensaje Proyecto guardado.",
+      "Use Guardar proyecto como… para conservar otra copia; atajo Ctrl+Mayús+S."
+    ],
+    "note": "Guarde también el archivo original del terreno. El JSON conserva el proyecto, pero no sustituye al DXF u OBJ."
+  },
+  {
+    "id": "abrir_proyecto",
+    "title": "Volver a abrir un proyecto",
+    "kicker": "Archivo > Abrir proyecto…",
+    "steps": [
+      "Pulse Abrir proyecto… en Archivo, o use Ctrl+O.",
+      "Seleccione el archivo .json guardado y confirme su apertura.",
+      "Si aparece Localizar terreno del proyecto, seleccione su DXF u OBJ original.",
+      "Espere la carga y revise A, B y los resultados recuperados."
+    ],
+    "note": "El programa vuelve a comprobar las geometrías guardadas contra el terreno."
+  },
+  {
+    "id": "exportar_csv",
+    "title": "Exportar los recorridos a CSV",
+    "kicker": "Archivo > Exportar ruta CSV…",
+    "steps": [
+      "Detenga la búsqueda y espere a que se habilite la exportación.",
+      "Abra Archivo y pulse Exportar ruta CSV….",
+      "Elija la carpeta, escriba un nombre .csv y guarde."
+    ],
+    "note": "En una exportación de tramos conformes, Section_ID distingue cada parte. CONNECTED identifica una conexión completa cuando existe; no una los fragmentos como si fueran una sola ruta."
+  },
+  {
+    "id": "exportar_dxf",
+    "title": "Exportar los recorridos a DXF",
+    "kicker": "Archivo > Exportar eje DXF…",
+    "steps": [
+      "Con la búsqueda detenida, abra Archivo.",
+      "Pulse Exportar eje DXF….",
+      "Elija una carpeta, escriba un nombre .dxf y guarde.",
+      "Abra el archivo en su programa de dibujo para revisar las geometrías."
+    ],
+    "note": "Los tramos se exportan separados y los huecos permanecen sin conectar. Guarde también el JSON si desea continuar trabajando en RouteTec."
+  },
+  {
+    "id": "habilitar_intermedios",
+    "title": "Habilitar los puntos intermedios",
+    "kicker": "Configuración > Puntos intermedios…",
+    "steps": [
+      "Abra Puntos intermedios… y marque Habilitar puntos intermedios.",
+      "Revise Pendiente máxima local, Radio mínimo local y Recta local mínima de avance.",
+      "Pulse Aplicar para mostrar los botones del panel lateral."
+    ],
+    "note": "Necesita una ruta calculada compatible. Si solo tiene candidatos independientes, P1 y P2 pueden permanecer deshabilitados, incluso si la revisión informa una conexión."
+  },
+  {
+    "id": "optimizar_intermedios",
+    "title": "Optimizar un tramo de una ruta disponible",
+    "kicker": "Use estos botones cuando estén habilitados",
+    "steps": [
+      "Pulse MARCAR P1 y haga clic sobre el inicio del tramo de la ruta.",
+      "Pulse MARCAR P2 y haga clic sobre un punto posterior del recorrido.",
+      "Revise la selección y pulse OPTIMIZAR.",
+      "Use LIMPIAR para retirar solamente P1 y P2."
+    ],
+    "note": "P1 debe estar antes de P2. También puede elegir sus números en Puntos intermedios… y pulsar Aplicar."
+  },
+  {
+    "id": "precision",
+    "title": "Reconocer los ajustes de precisión",
+    "kicker": "Configuración avanzada > Precisión",
+    "steps": [
+      "Revise Paso XY objetivo (m): escala de exploración espacial; inicial 10 m.",
+      "Revise Muestreo (m): separación de comprobación del recorrido; inicial 2 m.",
+      "Revise Tolerancia superficie (m): margen de comparación; inicial 0.01 m.",
+      "Revise Paso de direcciones (°): resolución angular; inicial 7.5°."
+    ],
+    "note": "Mantenga los valores iniciales en su primer ensayo. Un muestreo menor requiere más muestras y trabajo."
+  },
+  {
+    "id": "recursos",
+    "title": "Reconocer los recursos de búsqueda",
+    "kicker": "Configuración avanzada > Recursos",
+    "steps": [
+      "Mantenga activada Adaptar resolución y recursos para permitir ajustes automáticos.",
+      "Identifique Nodos XY iniciales y Expansiones iniciales: estados almacenados y procesados.",
+      "Identifique Aristas iniciales: conexiones que se pueden comprobar.",
+      "Identifique Muestras y Candidatos por variante: límites de verificación y exploración."
+    ],
+    "note": "Conserve los valores iniciales para empezar. Aumentar recursos consume más tiempo o memoria y no garantiza encontrar una conexión."
+  },
+  {
+    "id": "objetivo_costos",
+    "title": "Elegir cómo comparar los recorridos",
+    "kicker": "Configuración avanzada > Costos",
+    "steps": [
+      "Seleccione Longitud (sin precios) para comparar por longitud.",
+      "Seleccione Costos configurados (CU) si dispone de tarifas del proyecto.",
+      "Use Ejemplo sintético (CU ficticias) únicamente para practicar."
+    ],
+    "note": "Elija solo una opción. Longitud no muestra presupuesto monetario. CU significa unidad de costo; use la misma moneda o unidad en todas las tarifas."
+  },
+  {
+    "id": "tarifas",
+    "title": "Introducir las tarifas de construcción",
+    "kicker": "Costos configurados (CU)",
+    "steps": [
+      "Complete Vía / m² con el costo por unidad de superficie.",
+      "Complete Corte suelo / m³ y Corte roca / m³ con sus tarifas de excavación.",
+      "Complete Colocación relleno / m³ con su tarifa de colocación.",
+      "Complete Material importado / m³ y Disposición / m³ con las tarifas de suministro y destino del material excedente."
+    ],
+    "note": "Introduzca valores del proyecto. Las cifras de un ejemplo no son una cotización de obra."
+  },
+  {
+    "id": "acarreos",
+    "title": "Introducir roca y distancias de acarreo",
+    "kicker": "Desplace hacia abajo la pestaña Costos",
+    "steps": [
+      "Complete Acarreo / m³·km con la tarifa de transporte por volumen y distancia.",
+      "Complete Fracción roca (0–1): por ejemplo, 0.25 representa 25 %.",
+      "Complete Acarreo interno (km), Acarreo importación (km) y Acarreo disposición (km).",
+      "Pulse Cerrar y vuelva a buscar para comparar con los valores nuevos."
+    ],
+    "note": "Compruebe las unidades de cada campo. Las estimaciones son preliminares."
+  },
+  {
+    "id": "reiniciar",
+    "title": "Restablecer ajustes o comenzar otro recorrido",
+    "kicker": "Guarde primero lo que desea conservar",
+    "steps": [
+      "Guarde una copia del proyecto desde Archivo > Guardar proyecto como….",
+      "Para recuperar los ajustes iniciales, pulse Restablecer valores en Configuración avanzada.",
+      "Para comenzar otro recorrido, pulse LIMPIAR RUTA Y PUNTOS; retira la ruta y los extremos A y B.",
+      "Registre los extremos nuevos y vuelva a buscar."
+    ],
+    "note": "Restablecer conserva terreno, A/B y pendiente máxima; exige recalcular. LIMPIAR RUTA Y PUNTOS conserva la topografía."
+  },
+  {
+    "id": "problemas",
+    "title": "Resolver las dificultades más comunes",
+    "kicker": "Compruebe lo que muestra la pantalla",
+    "steps": [
+      "Si no puede buscar, espere la carga y registre X, Y y Z de A/B.",
+      "Si no puede exportar, detenga la búsqueda y compruebe que existan resultados verificados.",
+      "Si no encuentra conexión, consulte Detalles del resultado y revise terreno, extremos y límites.",
+      "Si aparece un error de muestras, revise Muestreo y Muestras en Configuración avanzada."
+    ],
+    "note": "Muchos tramos visibles no garantizan una carretera completa A–B."
+  }
+]

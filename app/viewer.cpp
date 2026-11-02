@@ -1307,7 +1307,12 @@ void RouteWindow::capture_guide(const QString& project,const QString& output){
         case 1:save(this,"04_ruta_iso");save(sidebar_,"05_panel_controles");view_->camera_view("TOP");break;
         case 2:save(this,"06_ruta_superior");save(view_,"07_leyenda_y_ruta");capture_menu("fileMenu","08_menu_archivo");break;
         case 3:capture_menu("settingsMenu","09_menu_configuracion");show_settings(design_dialog_);break;
-        case 4:save(design_dialog_,"10_diseno");design_dialog_->hide();advanced_tabs_->setCurrentIndex(0);show_settings(advanced_dialog_);break;
+        case 4:save(design_dialog_,"10_diseno");
+            if(auto* scroll=design_dialog_->findChild<QScrollArea*>())scroll->ensureWidgetVisible(fields_.at("min_radius_m"));
+            QApplication::processEvents();save(design_dialog_,"10b_diseno_geometria");
+            if(auto* scroll=design_dialog_->findChild<QScrollArea*>())scroll->ensureWidgetVisible(findChild<QPushButton*>("applyDesignStandards"));
+            QApplication::processEvents();save(design_dialog_,"10c_diseno_criterios");
+            design_dialog_->hide();advanced_tabs_->setCurrentIndex(0);show_settings(advanced_dialog_);break;
         case 5:save(advanced_dialog_,"11_avanzado_diseno");advanced_tabs_->setCurrentIndex(1);break;
         case 6:save(advanced_dialog_,"12_avanzado_precision");advanced_tabs_->setCurrentIndex(2);break;
         case 7:save(advanced_dialog_,"13_avanzado_recursos");advanced_tabs_->setCurrentIndex(3);applying_=true;cost_profile_->setCurrentIndex(cost_profile_->findData("custom"));applying_=false;update_controls();break;
